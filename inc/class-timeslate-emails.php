@@ -258,18 +258,18 @@ final class Timeslate_Emails {
 	public static function default_text( string $type, string $key ): string {
 		$defaults = array(
 			'customer-pending'   => array(
-				'subject' => __( 'We received your booking request — {site_name}', 'timeslate' ),
+				'subject' => __( 'We received your booking request at {site_name}', 'timeslate' ),
 				'intro'   => __( "Hi {name},\n\nThanks for your booking request at {site_name}. We've received it and will confirm by email as soon as we can.", 'timeslate' ),
 				'outro'   => '',
 			),
 			'customer-confirmed' => array(
-				'subject' => __( 'Your booking at {site_name} is confirmed — {date} at {time}', 'timeslate' ),
-				'intro'   => __( 'Hi {name},' . "\n\n" . 'Your booking at {site_name} is confirmed — we look forward to hosting you.', 'timeslate' ),
+				'subject' => __( 'Your booking at {site_name} is confirmed for {date} at {time}', 'timeslate' ),
+				'intro'   => __( "Hi {name},\n\nYour booking at {site_name} is confirmed.", 'timeslate' ),
 				'outro'   => '',
 			),
 			'customer-cancelled' => array(
 				'subject' => __( 'Your booking at {site_name} has been cancelled', 'timeslate' ),
-				'intro'   => __( 'Hi {name},' . "\n\n" . 'Your booking at {site_name} has been cancelled. The details below are for your records.', 'timeslate' ),
+				'intro'   => __( "Hi {name},\n\nYour booking at {site_name} has been cancelled. The details below are for your records.", 'timeslate' ),
 				'outro'   => '',
 			),
 			'owner-new'          => array(

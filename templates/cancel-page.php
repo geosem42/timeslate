@@ -29,7 +29,7 @@ $terminal       = in_array( $status, array( 'cancelled', 'completed', 'no_show' 
 ?>
 <?php if ( $just_cancelled ) : ?>
 	<p class="timeslate-cancel-page__lead">
-		<?php esc_html_e( 'Thanks for letting us know — your booking has been cancelled and a confirmation has been emailed to you.', 'timeslate' ); ?>
+		<?php esc_html_e( 'Thanks for letting us know. Your booking has been cancelled and a confirmation has been emailed to you.', 'timeslate' ); ?>
 	</p>
 <?php elseif ( 'cancelled' === $status ) : ?>
 	<p class="timeslate-cancel-page__lead">

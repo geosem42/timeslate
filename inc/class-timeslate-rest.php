@@ -209,7 +209,7 @@ final class Timeslate_REST {
 
 		$message = $auto_approve
 			? __( 'Your booking is confirmed.', 'timeslate' )
-			: __( "Thanks — we've received your request and will confirm by email shortly.", 'timeslate' );
+			: __( "Thanks. We have received your request and will confirm by email shortly.", 'timeslate' );
 
 		return new WP_REST_Response(
 			array(
@@ -225,7 +225,9 @@ final class Timeslate_REST {
 	// ---- Helpers ----
 
 	private static function client_ip(): string {
-		return (string) ( $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0' );
+		return isset( $_SERVER['REMOTE_ADDR'] )
+			? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) )
+			: '0.0.0.0';
 	}
 
 	private static function check_rate_limit( string $ip ) {

@@ -613,7 +613,7 @@ function StepNotes( { form, updateForm } ) {
 				{ __( 'Anything we should know?', 'timeslate' ) }
 			</h3>
 			<p className="timeslate-form__hint">
-				{ __( 'Optional — allergies, accessibility needs, special occasion.', 'timeslate' ) }
+				{ __( 'Optional. Anything we should know before your visit.', 'timeslate' ) }
 			</p>
 			<label className="timeslate-form__field">
 				<span className="timeslate-form__field-label">

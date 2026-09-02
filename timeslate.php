@@ -5,7 +5,7 @@
  * Description:       Online booking for appointments, tables, classes and anything else you schedule. Set your hours and how many people you can take at once.
  * Version:           1.0.0
  * Requires at least: 6.6
- * Tested up to:      6.9
+ * Tested up to:      7.1
  * Requires PHP:      8.1
  * Author:            George Semaan
  * Author URI:        https://logicvoid.dev
@@ -39,13 +39,6 @@ require_once TIMESLATE_DIR . 'inc/class-timeslate-admin.php';
 require_once TIMESLATE_DIR . 'inc/class-timeslate-emails.php';
 require_once TIMESLATE_DIR . 'inc/class-timeslate-tokens.php';
 require_once TIMESLATE_DIR . 'inc/blocks.php';
-
-add_action(
-	'init',
-	static function (): void {
-		load_plugin_textdomain( 'timeslate', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-	}
-);
 
 Timeslate_CPT::register();
 Timeslate_Settings_Admin::register();

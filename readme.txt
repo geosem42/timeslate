@@ -2,7 +2,7 @@
 Contributors: geosem
 Tags: booking, appointments, reservations, scheduling, bookings
 Requires at least: 6.6
-Tested up to: 6.9
+Tested up to: 7.1
 Requires PHP: 8.1
 Stable tag: 1.0.0
 License: GPLv2 or later

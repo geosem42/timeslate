@@ -100,7 +100,11 @@ final class Timeslate_Tokens {
 		}
 
 		// POST path — customer pressed "Confirm cancellation".
-		if ( 'POST' === ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) {
+		$ts_method = isset( $_SERVER['REQUEST_METHOD'] )
+			? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_METHOD'] ) )
+			: '';
+
+		if ( 'POST' === $ts_method ) {
 			$nonce_ok = isset( $_POST[ self::NONCE_FIELD ] )
 				&& wp_verify_nonce( sanitize_text_field( wp_unslash( (string) $_POST[ self::NONCE_FIELD ] ) ), self::NONCE_KEY . '_' . $post_id );
 			if ( ! $nonce_ok ) {
