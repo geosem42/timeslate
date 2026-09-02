@@ -1,0 +1,193 @@
+/* Timeslate — settings page styling.
+   Scoped under `.timeslate-settings` so nothing leaks into other
+   wp-admin screens. Visual language follows core admin conventions
+   (same greys, spacing, button sizes) rather than redefining its own. */
+
+.timeslate-settings .ts-hours {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	max-width: 760px;
+	margin: 12px 0 24px;
+}
+
+.timeslate-settings .ts-day {
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	padding: 12px 14px;
+}
+
+.timeslate-settings .ts-day-header {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	cursor: pointer;
+	margin-bottom: 8px;
+}
+
+.timeslate-settings .ts-day-header strong {
+	font-size: 14px;
+}
+
+.timeslate-settings .ts-day-periods {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin: 4px 0 4px 22px;
+	transition: opacity 0.15s ease;
+}
+
+/* Dim a day's periods when the day toggle is off. Using :has() rather
+   than JS so the dimming is purely presentational — the underlying
+   state is always the checkbox. */
+.timeslate-settings .ts-day:has(> .ts-day-header input:not(:checked)) .ts-day-periods,
+.timeslate-settings .ts-day:has(> .ts-day-header input:not(:checked)) .ts-period-add {
+	opacity: 0.45;
+}
+
+.timeslate-settings .ts-period {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.timeslate-settings .ts-period input[type="time"] {
+	width: 110px;
+}
+
+.timeslate-settings .ts-period-sep,
+.timeslate-settings .ts-period-unit {
+	color: #646970;
+	font-size: 13px;
+}
+
+.timeslate-settings .ts-capacity-input {
+	width: 80px;
+}
+
+.timeslate-settings .ts-period-remove,
+.timeslate-settings .ts-blackout-remove {
+	font-size: 18px;
+	line-height: 1;
+	padding: 2px 8px;
+	cursor: pointer;
+	border: none;
+	background: transparent;
+	color: #b32d2e;
+	border-radius: 4px;
+}
+
+.timeslate-settings .ts-period-remove:hover,
+.timeslate-settings .ts-blackout-remove:hover {
+	background: #fef2f2;
+}
+
+.timeslate-settings .ts-period-add {
+	margin-left: 22px;
+	padding: 0;
+	font-size: 13px;
+	cursor: pointer;
+}
+
+.timeslate-settings .ts-blackouts {
+	max-width: 760px;
+	margin: 12px 0 24px;
+}
+
+.timeslate-settings .ts-blackout-add-row {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.timeslate-settings .ts-blackout-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.timeslate-settings .ts-blackout-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 999px;
+	padding: 4px 6px 4px 12px;
+	font-size: 13px;
+	font-variant-numeric: tabular-nums;
+}
+
+.timeslate-settings .ts-blackout-remove {
+	font-size: 16px;
+	padding: 2px 6px;
+	border-radius: 999px;
+}
+
+/* Templates are inline <template> elements; they shouldn't render
+   even in browsers that treat them oddly. */
+.timeslate-settings template {
+	display: none;
+}
+
+/* Email messages — one section per email type.
+   Grouped cards make it visually obvious which subject/message/closing
+   pair go together when the page gets tall. */
+.timeslate-settings .ts-email-placeholders {
+	margin: 8px 0 16px;
+	padding: 10px 14px;
+	background: #f6f7f7;
+	border: 1px solid #e5e7eb;
+	border-radius: 6px;
+	font-size: 13px;
+	max-width: 760px;
+}
+
+.timeslate-settings .ts-email-placeholders ul {
+	margin: 6px 0 0 0;
+	padding: 0;
+	list-style: none;
+	display: grid;
+	grid-template-columns: repeat( auto-fill, minmax( 260px, 1fr ) );
+	gap: 4px 16px;
+}
+
+.timeslate-settings .ts-email-placeholders li {
+	margin: 0;
+}
+
+.timeslate-settings .ts-email-placeholders code {
+	background: #fff;
+	padding: 1px 6px;
+	border-radius: 3px;
+	font-size: 12px;
+}
+
+.timeslate-settings .ts-email-placeholder-desc {
+	color: #646970;
+	margin-left: 4px;
+}
+
+.timeslate-settings .ts-email-section {
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	padding: 4px 18px 12px;
+	margin: 0 0 14px;
+	max-width: 760px;
+}
+
+.timeslate-settings .ts-email-section__title {
+	font-size: 14px;
+	margin: 12px 0 0;
+}
+
+.timeslate-settings .ts-email-section .form-table th {
+	padding-left: 0;
+}

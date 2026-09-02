@@ -1,0 +1,14 @@
+{
+	"name": "timeslate",
+	"version": "1.0.0",
+	"description": "Online booking for WordPress.",
+	"private": true,
+	"license": "GPL-2.0-or-later",
+	"scripts": {
+		"build": "wp-scripts build --webpack-src-dir=assets/blocks/src --output-path=assets/blocks/build",
+		"dev":   "wp-scripts start --webpack-src-dir=assets/blocks/src --output-path=assets/blocks/build"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^32.0.0"
+	}
+}

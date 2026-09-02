@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "timeslate/form",
+	"title": "Booking Form",
+	"category": "timeslate",
+	"description": "Multi-step booking wizard — customers pick date, number of people, and time, enter their contact details, and reserve a table.",
+	"icon": "calendar-alt",
+	"keywords": [ "booking", "booking", "form", "wizard" ],
+	"textdomain": "timeslate",
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": [ "wide", "full" ],
+		"multiple": false,
+		"spacing": { "margin": [ "top", "bottom" ], "padding": true }
+	},
+	"attributes": {
+		"heading":    { "type": "string", "default": "Reserve a table" },
+		"subheading": { "type": "string", "default": "A few quick steps. No account required." }
+	},
+	"editorScript": "file:./index.js",
+	"viewScript":   "file:./view.js",
+	"editorStyle":  "file:./index.css",
+	"style":        "file:./style-index.css",
+	"render":       "file:./render.php"
+}

@@ -1,0 +1,36 @@
+/*
+ * Editor preview styles — only loaded inside wp-admin.
+ *
+ * Mirrors the frontend's restful card look at low fidelity; the real
+ * multi-step wizard is never rendered in the editor (state churn
+ * would make editing noisy). Authors just see the heading/subheading
+ * they're editing plus a note explaining where the frontend form
+ * picks up its data.
+ */
+
+.timeslate-form-editor__card {
+	padding: 20px;
+	border: 1px dashed #c6cacd;
+	border-radius: 12px;
+	background: #fafafa;
+	color: #1e1e1e;
+}
+
+.timeslate-form-editor__heading {
+	margin: 0 0 6px;
+	font-size: 20px;
+}
+
+.timeslate-form-editor__sub {
+	margin: 0 0 14px;
+	color: #555;
+}
+
+.timeslate-form-editor__note {
+	padding: 10px 12px;
+	border-radius: 8px;
+	background: #eef2ff;
+	color: #3749a8;
+	font-size: 13px;
+	line-height: 1.45;
+}

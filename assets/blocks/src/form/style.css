@@ -1,0 +1,581 @@
+/*
+ * Frontend styles for the booking form.
+ *
+ * Neutral and framework agnostic. Every colour reads from a
+ * `--timeslate-*` custom property with a sensible fallback, so a theme
+ * can restyle the form by declaring those properties and nothing else.
+ *
+ * Class names are BEM-ish and prefixed with `timeslate-form` so
+ * nothing collides with the host theme.
+ */
+
+.timeslate-form-wrap {
+	max-width: 860px;
+	margin-inline: auto;
+}
+
+/* A theme can add `timeslate-section-card` around the form to drop the
+   width cap and let the card fill its container. */
+.timeslate-section-card .timeslate-form-wrap {
+	max-width: none;
+}
+
+.timeslate-section-card .timeslate-form {
+	border-radius: 24px;
+	padding: clamp( 24px, 3vw, 40px );
+	box-shadow:
+		0 1px 2px rgba( 0, 0, 0, 0.06 ),
+		0 24px 48px -24px rgba( 0, 0, 0, 0.35 );
+}
+
+.timeslate-form-wrap__heading {
+	font-size: clamp( 28px, 3.6vw, 40px );
+	margin: 0 0 8px;
+	line-height: 1.15;
+}
+
+.timeslate-form-wrap__sub {
+	margin: 0 0 24px;
+	color: var( --timeslate-ink-2, #555 );
+}
+
+.timeslate-form-container {
+	position: relative;
+}
+
+.timeslate-form {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	padding: 24px;
+	border: 1px solid var( --timeslate-line, #e5e7eb );
+	border-radius: 14px;
+	background: var( --timeslate-surface, #fff );
+	/* Pin a dark ink so the card stays legible when dropped into a
+	   dark-on-light parent section. */
+	color: var( --timeslate-ink, #1e1e1e );
+}
+
+/* Stepper ---------------------------------------------------------- */
+
+.timeslate-form__steps {
+	display: grid;
+	grid-template-columns: repeat( 4, 1fr );
+	list-style: none;
+	padding: 0;
+	margin: 0 0 8px;
+	gap: 0;
+}
+
+.timeslate-form__step {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	font-size: 14px;
+	text-align: center;
+	color: var( --timeslate-ink-3, #888 );
+}
+
+/* Connector line between consecutive steps. Sits behind the number
+   circle (which has an opaque bg), so it visually segments. */
+.timeslate-form__step:not(:first-child)::before {
+	content: "";
+	position: absolute;
+	top: 18px;
+	left: -50%;
+	right: 50%;
+	height: 2px;
+	background: var( --timeslate-line, #e5e7eb );
+	z-index: 0;
+}
+
+.timeslate-form__step--done:not(:first-child)::before,
+.timeslate-form__step--active:not(:first-child)::before {
+	background: var( --timeslate-primary, #2c5d3f );
+}
+
+.timeslate-form__step-num {
+	position: relative;
+	z-index: 1;
+	display: inline-grid;
+	place-items: center;
+	width: 36px;
+	height: 36px;
+	border-radius: 999px;
+	border: 2px solid currentColor;
+	background: var( --timeslate-surface, #fff );
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.timeslate-form__step-label {
+	font-size: 14px;
+	line-height: 1.2;
+}
+
+.timeslate-form__step--active {
+	color: var( --timeslate-primary, #2c5d3f );
+	font-weight: 600;
+}
+
+.timeslate-form__step--active .timeslate-form__step-num {
+	background: var( --timeslate-primary, #2c5d3f );
+	color: var( --timeslate-primary-fg, #fff );
+	border-color: var( --timeslate-primary, #2c5d3f );
+}
+
+.timeslate-form__step--done {
+	color: var( --timeslate-primary, #2c5d3f );
+}
+
+.timeslate-form__step--done .timeslate-form__step-num {
+	background: var( --timeslate-surface, #fff );
+	color: var( --timeslate-primary, #2c5d3f );
+	border-color: var( --timeslate-primary, #2c5d3f );
+}
+
+/* On narrow screens, drop labels and let the numbers carry the stepper. */
+@media ( max-width: 520px ) {
+	.timeslate-form__step-label {
+		display: none;
+	}
+}
+
+/* Step body -------------------------------------------------------- */
+
+.timeslate-form__step-body {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.timeslate-form__step-heading {
+	font-size: 20px;
+	margin: 0;
+}
+
+.timeslate-form__row {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+}
+
+@media ( max-width: 480px ) {
+	.timeslate-form__row {
+		grid-template-columns: 1fr;
+	}
+}
+
+.timeslate-form__field {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.timeslate-form__field-label {
+	font-size: 13px;
+	font-weight: 500;
+	color: var( --timeslate-ink-2, #444 );
+}
+
+.timeslate-form__field input[ type="text" ],
+.timeslate-form__field input[ type="email" ],
+.timeslate-form__field input[ type="tel" ],
+.timeslate-form__field input[ type="date" ],
+.timeslate-form__field select,
+.timeslate-form__field textarea {
+	border: 1px solid var( --timeslate-line, #d1d5db );
+	border-radius: 8px;
+	padding: 10px 12px;
+	font-size: 15px;
+	background: var( --timeslate-surface, #fff );
+	color: inherit;
+	font-family: inherit;
+}
+
+.timeslate-form__field input:focus-visible,
+.timeslate-form__field select:focus-visible,
+.timeslate-form__field textarea:focus-visible {
+	outline: 2px solid var( --timeslate-primary, #2c5d3f );
+	outline-offset: 1px;
+	border-color: var( --timeslate-primary, #2c5d3f );
+}
+
+.timeslate-form__hint {
+	font-size: 13px;
+	color: var( --timeslate-ink-3, #888 );
+	margin: 0;
+}
+
+.timeslate-form__hint--warn {
+	color: #9a5b00;
+}
+
+.timeslate-form__hint--right {
+	text-align: right;
+	align-self: flex-end;
+}
+
+/* When & who step: calendar + details two-column layout ----------- */
+
+.timeslate-form__when {
+	display: grid;
+	grid-template-columns: minmax( 0, 1fr ) minmax( 0, 1fr );
+	gap: 20px;
+	align-items: start;
+}
+
+@media ( max-width: 640px ) {
+	.timeslate-form__when {
+		grid-template-columns: 1fr;
+	}
+}
+
+.timeslate-form__when-right {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	min-height: 280px;
+}
+
+/* Calendar --------------------------------------------------------- */
+
+.timeslate-form__cal {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding: 12px;
+	border: 1px solid var( --timeslate-line, #e5e7eb );
+	border-radius: 12px;
+	background: var( --timeslate-surface, #fff );
+}
+
+.timeslate-form__cal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	padding: 2px 4px;
+}
+
+.timeslate-form__cal-label {
+	font-size: 14px;
+	font-weight: 600;
+	text-align: center;
+	flex: 1;
+}
+
+.timeslate-form__cal-nav {
+	width: 28px;
+	height: 28px;
+	display: inline-grid;
+	place-items: center;
+	border-radius: 6px;
+	border: 1px solid var( --timeslate-line, #e5e7eb );
+	background: var( --timeslate-surface, #fff );
+	color: inherit;
+	cursor: pointer;
+	font-size: 18px;
+	line-height: 1;
+	font-family: inherit;
+	transition: background 0.15s, border-color 0.15s;
+}
+
+.timeslate-form__cal-nav:hover:not(:disabled) {
+	background: var( --timeslate-bg-alt, #f5f5f5 );
+	border-color: var( --timeslate-line-2, #d1d5db );
+}
+
+.timeslate-form__cal-nav:disabled {
+	opacity: 0.35;
+	cursor: not-allowed;
+}
+
+.timeslate-form__cal-weekdays,
+.timeslate-form__cal-grid {
+	display: grid;
+	grid-template-columns: repeat( 7, 1fr );
+	gap: 2px;
+}
+
+.timeslate-form__cal-weekday {
+	text-align: center;
+	font-size: 11px;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var( --timeslate-ink-3, #888 );
+	padding: 4px 0;
+}
+
+.timeslate-form__cal-day {
+	aspect-ratio: 1;
+	display: inline-grid;
+	place-items: center;
+	border: 1px solid transparent;
+	background: transparent;
+	border-radius: 8px;
+	font: inherit;
+	font-size: 14px;
+	color: inherit;
+	cursor: pointer;
+	transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+
+.timeslate-form__cal-day:hover:not(:disabled) {
+	background: var( --timeslate-bg-alt, #f1f2f4 );
+}
+
+.timeslate-form__cal-day:focus-visible {
+	outline: 2px solid var( --timeslate-primary, #2c5d3f );
+	outline-offset: 1px;
+}
+
+.timeslate-form__cal-day--outside {
+	visibility: hidden;
+}
+
+.timeslate-form__cal-day--disabled {
+	color: var( --timeslate-ink-3, #bbb );
+	cursor: not-allowed;
+	text-decoration: line-through;
+	text-decoration-color: var( --timeslate-line, #e5e7eb );
+}
+
+.timeslate-form__cal-day--disabled:hover {
+	background: transparent;
+}
+
+.timeslate-form__cal-day--today:not(.timeslate-form__cal-day--selected) {
+	border-color: var( --timeslate-line-2, #d1d5db );
+	font-weight: 600;
+}
+
+.timeslate-form__cal-day--selected {
+	background: var( --timeslate-primary, #2c5d3f );
+	color: var( --timeslate-primary-fg, #fff );
+	border-color: var( --timeslate-primary, #2c5d3f );
+	font-weight: 600;
+}
+
+.timeslate-form__cal-day--selected:hover:not(:disabled) {
+	background: var( --timeslate-primary, #2c5d3f );
+	color: var( --timeslate-primary-fg, #fff );
+}
+
+/* Party-size pills ------------------------------------------------- */
+
+.timeslate-form__party {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.timeslate-form__party-pill {
+	min-width: 36px;
+	height: 36px;
+	padding: 0 10px;
+	border-radius: 999px;
+	border: 1px solid var( --timeslate-line, #d1d5db );
+	background: var( --timeslate-surface, #fff );
+	color: inherit;
+	font: inherit;
+	font-size: 14px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.timeslate-form__party-pill:hover {
+	border-color: var( --timeslate-primary, #2c5d3f );
+}
+
+.timeslate-form__party-pill--selected {
+	background: var( --timeslate-primary, #2c5d3f );
+	color: var( --timeslate-primary-fg, #fff );
+	border-color: var( --timeslate-primary, #2c5d3f );
+}
+
+.timeslate-form__party-select {
+	border: 1px solid var( --timeslate-line, #d1d5db );
+	border-radius: 8px;
+	padding: 10px 12px;
+	font-size: 15px;
+	background: var( --timeslate-surface, #fff );
+	color: inherit;
+	font-family: inherit;
+}
+
+/* Slot picker ------------------------------------------------------ */
+
+.timeslate-form__slots {
+	display: grid;
+	grid-template-columns: repeat( auto-fill, minmax( 120px, 1fr ) );
+	gap: 8px;
+}
+
+.timeslate-form__slot {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 2px;
+	padding: 10px 12px;
+	border: 1px solid var( --timeslate-line, #d1d5db );
+	background: var( --timeslate-surface, #fff );
+	border-radius: 8px;
+	cursor: pointer;
+	font: inherit;
+	color: inherit;
+	transition: border-color 0.15s, background 0.15s, transform 0.15s;
+}
+
+.timeslate-form__slot:hover {
+	border-color: var( --timeslate-primary, #2c5d3f );
+	transform: translateY( -1px );
+}
+
+.timeslate-form__slot--selected {
+	border-color: var( --timeslate-primary, #2c5d3f );
+	background: var( --timeslate-primary-soft, #e6f0ea );
+}
+
+.timeslate-form__slot-time {
+	font-weight: 600;
+	font-size: 15px;
+}
+
+.timeslate-form__slot-cap {
+	font-size: 11px;
+	color: var( --timeslate-ink-3, #888 );
+}
+
+/* Skeleton shimmer used while availability is loading. Matches the real
+   slot tile's size so swapping to real tiles doesn't shift layout. */
+.timeslate-form__slot--skeleton {
+	background: linear-gradient(
+		90deg,
+		var( --timeslate-bg-alt, #f1f2f4 ) 0%,
+		var( --timeslate-line, #e5e7eb ) 50%,
+		var( --timeslate-bg-alt, #f1f2f4 ) 100%
+	);
+	background-size: 200% 100%;
+	animation: timeslate-shimmer 1.2s linear infinite;
+	border-color: transparent;
+	cursor: default;
+	min-height: 52px;
+	pointer-events: none;
+}
+
+.timeslate-form__slot--skeleton:hover {
+	transform: none;
+	border-color: transparent;
+}
+
+@keyframes timeslate-shimmer {
+	0%   { background-position: 200% 0; }
+	100% { background-position: -200% 0; }
+}
+
+/* Summary (review + success) -------------------------------------- */
+
+.timeslate-form__summary {
+	margin: 0;
+	display: grid;
+	gap: 6px;
+	padding: 14px 16px;
+	border-radius: 10px;
+	background: var( --timeslate-bg-alt, #f5f5f5 );
+}
+
+.timeslate-form__summary-row {
+	display: grid;
+	grid-template-columns: 100px 1fr;
+	gap: 8px;
+	font-size: 14px;
+}
+
+.timeslate-form__summary-row dt {
+	color: var( --timeslate-ink-3, #888 );
+	font-weight: 500;
+}
+
+.timeslate-form__summary-row dd {
+	margin: 0;
+	color: inherit;
+}
+
+/* Nav buttons ------------------------------------------------------ */
+
+.timeslate-form__nav {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+	margin-top: 4px;
+}
+
+.timeslate-form__nav > *:only-child {
+	margin-inline-start: auto;
+}
+
+.timeslate-form__btn {
+	padding: 10px 20px;
+	border-radius: 999px;
+	font: inherit;
+	font-weight: 500;
+	cursor: pointer;
+	border: 1px solid transparent;
+	transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.timeslate-form__btn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.timeslate-form__btn--primary {
+	background: var( --timeslate-primary, #2c5d3f );
+	color: var( --timeslate-primary-fg, #fff );
+}
+
+.timeslate-form__btn--primary:not(:disabled):hover {
+	transform: translateY( -1px );
+	box-shadow: 0 6px 16px -6px rgba( 0, 0, 0, 0.2 );
+}
+
+.timeslate-form__btn--ghost {
+	background: transparent;
+	color: inherit;
+	border-color: var( --timeslate-line-2, #9ca3af );
+}
+
+.timeslate-form__btn--ghost:not(:disabled):hover {
+	background: var( --timeslate-bg-alt, #f5f5f5 );
+}
+
+/* Error + success ------------------------------------------------- */
+
+.timeslate-form__error {
+	padding: 10px 14px;
+	border-radius: 8px;
+	background: #fef2f2;
+	color: #9b1c1c;
+	font-size: 14px;
+}
+
+.timeslate-form--success {
+	align-items: flex-start;
+}
+
+.timeslate-form__success-icon {
+	width: 40px;
+	height: 40px;
+	border-radius: 999px;
+	background: var( --timeslate-primary, #2c5d3f );
+	color: var( --timeslate-primary-fg, #fff );
+	display: grid;
+	place-items: center;
+	font-size: 22px;
+	font-weight: 700;
+}

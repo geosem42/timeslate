@@ -1,0 +1,172 @@
+/* Timeslate — list view styling.
+   Scoped to the timeslate_booking CPT list; nothing leaks into other
+   admin screens. */
+
+/* Column widths — date/time are scannable, status pill stays compact. */
+.post-type-timeslate_booking .wp-list-table .column-sb_booking_date { width: 110px; }
+.post-type-timeslate_booking .wp-list-table .column-sb_booking_time { width:  70px; }
+.post-type-timeslate_booking .wp-list-table .column-sb_party        { width:  60px; }
+.post-type-timeslate_booking .wp-list-table .column-sb_status       { width: 110px; }
+
+.post-type-timeslate_booking .ts-muted { color: #a7aaad; }
+
+/* Status badges — small pills, color by status.
+   Lightweight palette to stay readable on both the light grey row
+   stripe and a hover-highlighted row. */
+.ts-status-badge {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1.5;
+	border: 1px solid transparent;
+	white-space: nowrap;
+}
+
+.ts-status-badge--pending {
+	background: #fef3c7;
+	color: #92400e;
+	border-color: #fde68a;
+}
+
+.ts-status-badge--confirmed {
+	background: #dcfce7;
+	color: #14532d;
+	border-color: #bbf7d0;
+}
+
+.ts-status-badge--completed {
+	background: #dbeafe;
+	color: #1e3a8a;
+	border-color: #bfdbfe;
+}
+
+.ts-status-badge--cancelled {
+	background: #f3f4f6;
+	color: #4b5563;
+	border-color: #e5e7eb;
+}
+
+.ts-status-badge--no_show {
+	background: #fee2e2;
+	color: #991b1b;
+	border-color: #fecaca;
+}
+
+/* Row-action link colors. WP's default is blue; we tint destructive
+   actions red so owners don't accidentally cancel a booking thinking
+   it's a confirm. */
+.ts-row-action--cancelled,
+.ts-row-action--no_show {
+	color: #b32d2e;
+}
+.ts-row-action--cancelled:hover,
+.ts-row-action--no_show:hover {
+	color: #8c2323;
+}
+
+/* ---- Edit-screen Booking Details box ------------------------------
+   Two-column label/value layout. Rendered inside a standard WP meta
+   box so the box chrome is supplied by core; we only style the
+   inside. */
+
+.ts-details {
+	display: grid;
+	gap: 10px;
+	padding: 4px 0;
+}
+
+.ts-details__row {
+	display: grid;
+	grid-template-columns: 160px 1fr;
+	gap: 12px;
+	align-items: baseline;
+}
+
+.ts-details__label {
+	font-size: 13px;
+	color: #646970;
+	font-weight: 500;
+}
+
+.ts-details__value {
+	font-size: 14px;
+	color: #1e1e1e;
+	word-break: break-word;
+}
+
+.ts-details__value a {
+	color: #2271b1;
+	text-decoration: none;
+}
+
+.ts-details__value a:hover {
+	color: #135e96;
+	text-decoration: underline;
+}
+
+.ts-details__divider {
+	height: 1px;
+	background: #e5e7eb;
+	margin: 4px 0;
+}
+
+/* ---- Edit-screen Actions box (sidebar) ----------------------------
+   A current-status line at the top, then one button per available
+   transition. Stacked vertically — the sidebar is narrow enough that
+   inline buttons would wrap awkwardly. */
+
+.ts-actions {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.ts-actions__current {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #e5e7eb;
+}
+
+.ts-actions__current-label {
+	font-size: 12px;
+	color: #646970;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.ts-actions__current .ts-status-badge {
+	align-self: flex-start;
+}
+
+.ts-actions__buttons {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.ts-actions__btn {
+	text-align: center;
+	justify-content: center;
+}
+
+.ts-actions__btn--destructive:not(.button-primary) {
+	color: #b32d2e;
+	border-color: #dcdcde;
+}
+
+.ts-actions__btn--destructive:not(.button-primary):hover {
+	color: #8c2323;
+	border-color: #b32d2e;
+	background: #fef2f2;
+}
+
+.ts-actions__terminal {
+	margin: 0;
+	color: #646970;
+	font-style: italic;
+	font-size: 13px;
+}
