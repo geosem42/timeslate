@@ -65,6 +65,7 @@ rsync -a \
   --exclude='/package.json' \
   --exclude='/package-lock.json' \
   --exclude='/CLAUDE.md' \
+  --exclude='/README.md' \
   --exclude='/memory' \
   --exclude='/assets/blocks/src' \
   --exclude='/tests' \
