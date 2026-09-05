@@ -3,7 +3,10 @@
  * REST controller — public availability lookup and booking creation.
  *
  * Both routes are public (no auth) because customers book without
- * logging in. Abuse mitigation:
+ * logging in, the same way core accepts comments from visitors. Every
+ * argument is sanitised and validated in register_rest_route(), and
+ * handle_create() checks each field again before it writes. Abuse
+ * mitigation:
  *
  *   - Honeypot field (`website`): should always be empty on a real
  *     submission; bots fill it out. Non-empty → reject with 400.
@@ -47,15 +50,22 @@ final class Timeslate_REST {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( __CLASS__, 'handle_availability' ),
+				// Public on purpose: visitors check free times before they
+				// book, without an account. The response lists free slots
+				// only, never who booked.
 				'permission_callback' => '__return_true',
 				'args'                => array(
-					'date'  => array(
-						'type'     => 'string',
-						'required' => true,
+					'date'   => array(
+						'type'              => 'string',
+						'required'          => true,
+						'sanitize_callback' => 'sanitize_text_field',
+						'validate_callback' => array( __CLASS__, 'validate_date' ),
 					),
 					'people' => array(
-						'type'     => 'integer',
-						'required' => true,
+						'type'              => 'integer',
+						'required'          => true,
+						'sanitize_callback' => 'absint',
+						'validate_callback' => array( __CLASS__, 'validate_people' ),
 					),
 				),
 			)
@@ -67,9 +77,108 @@ final class Timeslate_REST {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( __CLASS__, 'handle_create' ),
+				// Public on purpose: the booking form is for visitors who
+				// have no account. Abuse is limited by the honeypot, the
+				// per-address rate limit and the server-side availability
+				// check in handle_create().
 				'permission_callback' => '__return_true',
+				'args'                => array(
+					'date'    => array(
+						'type'              => 'string',
+						'sanitize_callback' => 'sanitize_text_field',
+						'validate_callback' => array( __CLASS__, 'validate_date' ),
+					),
+					'time'    => array(
+						'type'              => 'string',
+						'sanitize_callback' => 'sanitize_text_field',
+						'validate_callback' => array( __CLASS__, 'validate_time' ),
+					),
+					'people'  => array(
+						'type'              => 'integer',
+						'sanitize_callback' => 'absint',
+						'validate_callback' => array( __CLASS__, 'validate_people' ),
+					),
+					'name'    => array(
+						'type'              => 'string',
+						'sanitize_callback' => 'sanitize_text_field',
+					),
+					'email'   => array(
+						'type'              => 'string',
+						'sanitize_callback' => 'sanitize_email',
+					),
+					'phone'   => array(
+						'type'              => 'string',
+						'sanitize_callback' => 'sanitize_text_field',
+					),
+					'notes'   => array(
+						'type'              => 'string',
+						'sanitize_callback' => 'sanitize_textarea_field',
+					),
+					'website' => array(
+						'type'              => 'string',
+						'sanitize_callback' => 'sanitize_text_field',
+						'validate_callback' => array( __CLASS__, 'validate_honeypot' ),
+					),
+				),
 			)
 		);
+	}
+
+	// ---- Argument validation -----------------------------------------
+
+	/**
+	 * A calendar date as YYYY-MM-DD. The availability engine checks
+	 * that the date exists; this only rejects the wrong shape.
+	 *
+	 * @param mixed $value Raw request value.
+	 * @return true|WP_Error
+	 */
+	public static function validate_date( $value ) {
+		if ( is_string( $value ) && preg_match( '/^\d{4}-\d{2}-\d{2}$/', $value ) ) {
+			return true;
+		}
+		return new WP_Error( 'timeslate_invalid_date', __( 'Invalid date.', 'timeslate' ), array( 'status' => 400 ) );
+	}
+
+	/**
+	 * A time of day as HH:MM.
+	 *
+	 * @param mixed $value Raw request value.
+	 * @return true|WP_Error
+	 */
+	public static function validate_time( $value ) {
+		if ( is_string( $value ) && preg_match( '/^\d{2}:\d{2}$/', $value ) ) {
+			return true;
+		}
+		return new WP_Error( 'timeslate_invalid_time', __( 'Invalid time.', 'timeslate' ), array( 'status' => 400 ) );
+	}
+
+	/**
+	 * The honeypot must be empty. Validation runs on the raw value,
+	 * before sanitisation strips tags, so markup-only junk is caught.
+	 *
+	 * @param mixed $value Raw request value.
+	 * @return true|WP_Error
+	 */
+	public static function validate_honeypot( $value ) {
+		if ( '' === trim( (string) $value ) ) {
+			return true;
+		}
+		return new WP_Error( 'timeslate_invalid', __( 'Invalid submission.', 'timeslate' ), array( 'status' => 400 ) );
+	}
+
+	/**
+	 * A whole number of people, at least one. The upper limit is the
+	 * owner's setting, which the availability engine applies.
+	 *
+	 * @param mixed $value Raw request value.
+	 * @return true|WP_Error
+	 */
+	public static function validate_people( $value ) {
+		if ( is_numeric( $value ) && (int) $value >= 1 && (string) (int) $value === (string) $value ) {
+			return true;
+		}
+		return new WP_Error( 'timeslate_invalid_people', __( 'Please choose at least one person.', 'timeslate' ), array( 'status' => 400 ) );
 	}
 
 	/**
@@ -88,7 +197,7 @@ final class Timeslate_REST {
 	/**
 	 * POST /bookings — validate, re-check availability, persist.
 	 *
-	 * Returns 201 + { id, status, token, message } on success, or a
+	 * Returns 201 + { id, status, message } on success, or a
 	 * WP_Error with an appropriate status code:
 	 *   400 — invalid input (bad date/time/people/name/email/phone)
 	 *   409 — slot no longer available (raced with another booking)
@@ -134,11 +243,11 @@ final class Timeslate_REST {
 		if ( '' === $name || mb_strlen( $name ) > 100 ) {
 			return self::bad_request( 'timeslate_invalid_name', __( 'Please enter a valid name.', 'timeslate' ) );
 		}
-		if ( '' === $email || ! is_email( $email ) ) {
+		if ( '' === $email || strlen( $email ) > 254 || ! is_email( $email ) ) {
 			return self::bad_request( 'timeslate_invalid_email', __( 'Please enter a valid email address.', 'timeslate' ) );
 		}
-		if ( '' === $phone ) {
-			return self::bad_request( 'timeslate_invalid_phone', __( 'Please enter a phone number.', 'timeslate' ) );
+		if ( '' === $phone || mb_strlen( $phone ) > 40 ) {
+			return self::bad_request( 'timeslate_invalid_phone', __( 'Please enter a valid phone number.', 'timeslate' ) );
 		}
 		if ( mb_strlen( $notes ) > 500 ) {
 			return self::bad_request( 'timeslate_invalid_notes', __( 'Notes must be under 500 characters.', 'timeslate' ) );
@@ -189,17 +298,17 @@ final class Timeslate_REST {
 			);
 		}
 
-		update_post_meta( $post_id, '_ts_date', $date );
-		update_post_meta( $post_id, '_ts_time', $time );
-		update_post_meta( $post_id, '_ts_people', $people );
-		update_post_meta( $post_id, '_ts_duration_mins', $duration );
-		update_post_meta( $post_id, '_ts_name', $name );
-		update_post_meta( $post_id, '_ts_email', $email );
-		update_post_meta( $post_id, '_ts_phone', $phone );
-		update_post_meta( $post_id, '_ts_notes', $notes );
-		update_post_meta( $post_id, '_ts_status', $status );
-		update_post_meta( $post_id, '_ts_token', $token );
-		update_post_meta( $post_id, '_ts_ip', $ip );
+		update_post_meta( $post_id, '_timeslate_date', $date );
+		update_post_meta( $post_id, '_timeslate_time', $time );
+		update_post_meta( $post_id, '_timeslate_people', $people );
+		update_post_meta( $post_id, '_timeslate_duration_mins', $duration );
+		update_post_meta( $post_id, '_timeslate_name', $name );
+		update_post_meta( $post_id, '_timeslate_email', $email );
+		update_post_meta( $post_id, '_timeslate_phone', $phone );
+		update_post_meta( $post_id, '_timeslate_notes', $notes );
+		update_post_meta( $post_id, '_timeslate_status', $status );
+		update_post_meta( $post_id, '_timeslate_token', $token );
+		update_post_meta( $post_id, '_timeslate_ip', $ip );
 
 		// Fire confirmation + owner-notification emails. Failures from
 		// wp_mail don't block the HTTP response — the booking is already
@@ -215,7 +324,6 @@ final class Timeslate_REST {
 			array(
 				'id'      => (int) $post_id,
 				'status'  => $status,
-				'token'   => $token,
 				'message' => $message,
 			),
 			201
@@ -225,13 +333,34 @@ final class Timeslate_REST {
 	// ---- Helpers ----
 
 	private static function client_ip(): string {
-		return isset( $_SERVER['REMOTE_ADDR'] )
+		$ip = isset( $_SERVER['REMOTE_ADDR'] )
 			? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) )
 			: '0.0.0.0';
+
+		/**
+		 * Filter the address the rate limit counts against. The plugin
+		 * trusts REMOTE_ADDR only; a site behind a proxy that does not
+		 * rewrite it can supply the real address here.
+		 *
+		 * @param string $ip The address as PHP sees it.
+		 */
+		return (string) apply_filters( 'timeslate_client_ip', $ip );
+	}
+
+	/**
+	 * The bucket an address counts against. IPv6 is bucketed by /64,
+	 * because one connection can use any address inside its block.
+	 */
+	private static function rate_limit_bucket( string $ip ): string {
+		$packed = inet_pton( $ip );
+		if ( false !== $packed && 16 === strlen( $packed ) ) {
+			return (string) inet_ntop( substr( $packed, 0, 8 ) . str_repeat( "\0", 8 ) );
+		}
+		return $ip;
 	}
 
 	private static function check_rate_limit( string $ip ) {
-		$key   = 'ts_rl_' . md5( $ip );
+		$key   = 'timeslate_rl_' . md5( self::rate_limit_bucket( $ip ) );
 		$count = (int) get_transient( $key );
 		if ( $count >= self::RATE_LIMIT_MAX ) {
 			return new WP_Error(

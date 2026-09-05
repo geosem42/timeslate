@@ -25,10 +25,10 @@ import { __, sprintf } from '@wordpress/i18n';
 function mountAll() {
 	const containers = document.querySelectorAll( '.timeslate-form-container' );
 	containers.forEach( ( node ) => {
-		if ( node.dataset.sbMounted === '1' ) {
+		if ( node.dataset.timeslateMounted === '1' ) {
 			return;
 		}
-		node.dataset.sbMounted = '1';
+		node.dataset.timeslateMounted = '1';
 
 		const config = {
 			restBase: String( node.dataset.restBase || '' ).replace( /\/+$/, '' ),
@@ -570,6 +570,7 @@ function StepContact( { form, updateForm } ) {
 				</span>
 				<input
 					type="text"
+					maxLength={ 100 }
 					required
 					autoComplete="name"
 					value={ form.name }
@@ -583,6 +584,7 @@ function StepContact( { form, updateForm } ) {
 				</span>
 				<input
 					type="email"
+					maxLength={ 254 }
 					required
 					autoComplete="email"
 					value={ form.email }
@@ -596,6 +598,7 @@ function StepContact( { form, updateForm } ) {
 				</span>
 				<input
 					type="tel"
+					maxLength={ 40 }
 					required
 					autoComplete="tel"
 					value={ form.phone }

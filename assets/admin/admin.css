@@ -3,10 +3,10 @@
    admin screens. */
 
 /* Column widths — date/time are scannable, status pill stays compact. */
-.post-type-timeslate_booking .wp-list-table .column-sb_booking_date { width: 110px; }
-.post-type-timeslate_booking .wp-list-table .column-sb_booking_time { width:  70px; }
-.post-type-timeslate_booking .wp-list-table .column-sb_party        { width:  60px; }
-.post-type-timeslate_booking .wp-list-table .column-sb_status       { width: 110px; }
+.post-type-timeslate_booking .wp-list-table .column-timeslate_booking_date { width: 110px; }
+.post-type-timeslate_booking .wp-list-table .column-timeslate_booking_time { width:  70px; }
+.post-type-timeslate_booking .wp-list-table .column-timeslate_people      { width:  60px; }
+.post-type-timeslate_booking .wp-list-table .column-timeslate_status      { width: 110px; }
 
 .post-type-timeslate_booking .ts-muted { color: #a7aaad; }
 
@@ -91,6 +91,7 @@
 }
 
 .ts-details__value {
+	white-space: pre-line;
 	font-size: 14px;
 	color: #1e1e1e;
 	word-break: break-word;

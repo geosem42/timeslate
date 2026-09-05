@@ -16,6 +16,8 @@ Timeslate lets people book a time with you from your own website. You set the da
 
 It does not care what you are booking. A clinic taking patients, a studio taking classes, a restaurant taking tables and a workshop taking repairs all work the same way: hours, a capacity, and a length of time.
 
+Timeslate is made by Logic Void. The plugin page is at [logicvoid.dev/plugins/timeslate](https://logicvoid.dev/plugins/timeslate?ref=wporg).
+
 Features:
 
 * Weekly hours, with more than one period a day. A morning session can take fewer people than an afternoon one.
@@ -30,7 +32,11 @@ Features:
 * A cancel link in the customer's email, so they can cancel without an account and free the slot for someone else.
 * Nothing is deleted when you uninstall unless you ask for it. The setting is off by default.
 
-Timeslate stores its data in your own database. It does not send anything to a third party service.
+Timeslate stores its data in your own database: each booking keeps the name, email address, phone number and notes the customer entered, and the IP address it was sent from. Nothing is sent to a third party service. Bookings are visible to Editors and Administrators.
+
+= Source code =
+
+The booking form block in `assets/blocks/build` is compiled from the source in `assets/blocks/src`, which ships with the plugin. It is built with @wordpress/scripts: run `npm install` and then `npm run build` in the plugin folder. Development happens at [github.com/geosem42/timeslate](https://github.com/geosem42/timeslate).
 
 == Installation ==
 

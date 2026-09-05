@@ -50,7 +50,7 @@ final class Timeslate_Emails {
 	 * notification to every address configured in settings.
 	 */
 	public static function send_on_created( int $post_id ): void {
-		$status = (string) get_post_meta( $post_id, '_ts_status', true ) ?: 'pending';
+		$status = (string) get_post_meta( $post_id, '_timeslate_status', true ) ?: 'pending';
 
 		if ( 'confirmed' === $status ) {
 			self::send( 'customer-confirmed', $post_id );
@@ -373,9 +373,11 @@ final class Timeslate_Emails {
 		return self::capture_template( 'email-wrapper', $wrap_vars, $type );
 	}
 
-	private static function capture_template( string $name, array $vars, string $type ): string {
-		$default = TIMESLATE_DIR . 'templates/' . $name . '.php';
-		$theme   = locate_template( 'timeslate/' . $name . '.php' );
+	private static function capture_template( string $template, array $vars, string $type ): string {
+		// Locals here must not collide with keys of $vars, or the
+		// extract() below skips them: `$name` is the customer's name.
+		$default = TIMESLATE_DIR . 'templates/' . $template . '.php';
+		$theme   = locate_template( 'timeslate/' . $template . '.php' );
 		$path    = $theme ?: $default;
 
 		/**
@@ -385,7 +387,7 @@ final class Timeslate_Emails {
 		$path = (string) apply_filters(
 			"timeslate_email_template_path_{$type}",
 			$path,
-			$name,
+			$template,
 			$vars
 		);
 
@@ -415,15 +417,15 @@ final class Timeslate_Emails {
 			return array();
 		}
 
-		$date   = (string) get_post_meta( $post_id, '_ts_date', true );
-		$time   = (string) get_post_meta( $post_id, '_ts_time', true );
-		$people  = (int) get_post_meta( $post_id, '_ts_people', true );
-		$name   = (string) get_post_meta( $post_id, '_ts_name', true ) ?: $post->post_title;
-		$email  = (string) get_post_meta( $post_id, '_ts_email', true );
-		$phone  = (string) get_post_meta( $post_id, '_ts_phone', true );
-		$notes  = (string) get_post_meta( $post_id, '_ts_notes', true );
-		$status = (string) get_post_meta( $post_id, '_ts_status', true ) ?: 'pending';
-		$token  = (string) get_post_meta( $post_id, '_ts_token', true );
+		$date   = (string) get_post_meta( $post_id, '_timeslate_date', true );
+		$time   = (string) get_post_meta( $post_id, '_timeslate_time', true );
+		$people  = (int) get_post_meta( $post_id, '_timeslate_people', true );
+		$name   = (string) get_post_meta( $post_id, '_timeslate_name', true ) ?: $post->post_title;
+		$email  = (string) get_post_meta( $post_id, '_timeslate_email', true );
+		$phone  = (string) get_post_meta( $post_id, '_timeslate_phone', true );
+		$notes  = (string) get_post_meta( $post_id, '_timeslate_notes', true );
+		$status = (string) get_post_meta( $post_id, '_timeslate_status', true ) ?: 'pending';
+		$token  = (string) get_post_meta( $post_id, '_timeslate_token', true );
 
 		$date_long   = $date;
 		$time_pretty = $time;
@@ -438,7 +440,17 @@ final class Timeslate_Emails {
 		$site_name = wp_specialchars_decode( (string) get_option( 'blogname' ), ENT_QUOTES );
 		$site_url  = home_url( '/' );
 
-		$admin_url  = '' !== $token ? get_edit_post_link( $post_id, 'raw' ) : '';
+		// Not get_edit_post_link(): that returns null unless the current
+		// user can edit the post, and bookings are created by visitors.
+		$admin_url  = '' !== $token
+			? add_query_arg(
+				array(
+					'post'   => $post_id,
+					'action' => 'edit',
+				),
+				admin_url( 'post.php' )
+			)
+			: '';
 		$cancel_url = '' !== $token && class_exists( 'Timeslate_Tokens' )
 			? Timeslate_Tokens::cancel_url( $post_id, $token )
 			: '';

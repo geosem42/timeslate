@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$people_text = sprintf(
+$timeslate_people_text = sprintf(
 	/* translators: %d: number of people. */
 	_n( '%d person', '%d people', (int) ( $people ?? 0 ), 'timeslate' ),
 	(int) ( $people ?? 0 )
@@ -40,7 +40,7 @@ $people_text = sprintf(
 				</tr>
 				<tr>
 					<td style="padding:4px 0;color:#646970;"><?php esc_html_e( 'People', 'timeslate' ); ?></td>
-					<td style="padding:4px 0;font-weight:500;"><?php echo esc_html( $people_text ); ?></td>
+					<td style="padding:4px 0;font-weight:500;"><?php echo esc_html( $timeslate_people_text ); ?></td>
 				</tr>
 				<?php if ( ! empty( $status_label ) ) : ?>
 				<tr>
@@ -51,7 +51,7 @@ $people_text = sprintf(
 				<?php if ( ! empty( $notes ) ) : ?>
 				<tr>
 					<td style="padding:4px 0;color:#646970;vertical-align:top;"><?php esc_html_e( 'Notes', 'timeslate' ); ?></td>
-					<td style="padding:4px 0;color:#1e1e1e;"><?php echo esc_html( (string) $notes ); ?></td>
+					<td style="padding:4px 0;color:#1e1e1e;"><?php echo wp_kses( nl2br( esc_html( (string) $notes ) ), array( 'br' => array() ) ); ?></td>
 				</tr>
 				<?php endif; ?>
 			</table>

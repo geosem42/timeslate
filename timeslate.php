@@ -5,7 +5,6 @@
  * Description:       Online booking for appointments, tables, classes and anything else you schedule. Set your hours and how many people you can take at once.
  * Version:           1.0.0
  * Requires at least: 6.6
- * Tested up to:      7.1
  * Requires PHP:      8.1
  * Author:            George Semaan
  * Author URI:        https://logicvoid.dev

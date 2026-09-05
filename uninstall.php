@@ -8,11 +8,10 @@
  * to destructive cleanup via the `uninstall_delete_data` flag under
  * Bookings → Settings → Advanced; when that flag is on, we drop:
  *
- *   • every `timeslate_booking` post (bypassing trash)
- *   • every `_ts_*` post meta row (covered by the post delete, but we
- *     issue a direct DELETE for any orphans too)
+ *   • every `timeslate_booking` post (bypassing trash), which takes
+ *     its meta with it
  *   • the `timeslate_options` option
- *   • every `sb_rl_*` rate-limit transient
+ *   • every `timeslate_rl_*` rate-limit transient
  *
  * Multisite: each site in the network is purged individually so a
  * network-uninstall handles per-site data. We do NOT touch users,
@@ -43,24 +42,18 @@ function timeslate_uninstall_site(): void {
 	global $wpdb;
 
 	// Delete every booking post, bypassing trash.
-	$post_ids = $wpdb->get_col(
-		$wpdb->prepare(
-			"SELECT ID FROM {$wpdb->posts} WHERE post_type = %s",
-			'timeslate_booking'
+	$post_ids = get_posts(
+		array(
+			'post_type'      => 'timeslate_booking',
+			'post_status'    => array_keys( get_post_stati() ),
+			'numberposts'    => -1,
+			'fields'         => 'ids',
+			'no_found_rows'  => true,
 		)
 	);
 	foreach ( (array) $post_ids as $post_id ) {
 		wp_delete_post( (int) $post_id, true );
 	}
-
-	// Sweep any orphaned _ts_* meta rows. Post-delete should have taken
-	// them, but a stale row here would leak silently.
-	$wpdb->query(
-		$wpdb->prepare(
-			"DELETE FROM {$wpdb->postmeta} WHERE meta_key LIKE %s",
-			$wpdb->esc_like( '_ts_' ) . '%'
-		)
-	);
 
 	// Drop the plugin's options row.
 	delete_option( 'timeslate_options' );
@@ -69,14 +62,14 @@ function timeslate_uninstall_site(): void {
 	$wpdb->query(
 		$wpdb->prepare(
 			"DELETE FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s",
-			$wpdb->esc_like( '_transient_ts_rl_' ) . '%',
-			$wpdb->esc_like( '_transient_timeout_ts_rl_' ) . '%'
+			$wpdb->esc_like( '_transient_timeslate_rl_' ) . '%',
+			$wpdb->esc_like( '_transient_timeout_timeslate_rl_' ) . '%'
 		)
 	);
 }
 
 if ( is_multisite() ) {
-	$ts_site_ids = get_sites(
+	$timeslate_site_ids = get_sites(
 		array(
 			'fields'                 => 'ids',
 			'number'                 => 0,
@@ -84,8 +77,8 @@ if ( is_multisite() ) {
 			'update_site_meta_cache' => false,
 		)
 	);
-	foreach ( (array) $ts_site_ids as $ts_site_id ) {
-		switch_to_blog( (int) $ts_site_id );
+	foreach ( (array) $timeslate_site_ids as $timeslate_site_id ) {
+		switch_to_blog( (int) $timeslate_site_id );
 		timeslate_uninstall_site();
 		restore_current_blog();
 	}

@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 #
-# Build the Envato-distributable zip for Timeslate.
+# Build the WordPress.org zip for Timeslate.
 #
 # What it does:
-#   1. Runs `npm run build` to produce compiled block JS + the
-#      FullCalendar vendor bundle.
+#   1. Runs `npm run build` to produce the compiled block JS.
 #   2. Regenerates languages/timeslate.pot from the source.
 #   3. Copies the plugin directory to a staging area under /tmp.
-#   4. Strips everything Envato reviewers reject: dev-only files,
-#      block source, node_modules, IDE configs, git metadata, CLAUDE.md.
+#   4. Strips dev-only files: node_modules, the lock file, this tools
+#      directory, IDE configs, git metadata, CLAUDE.md.
+#      The block source in assets/blocks/src, package.json and README.md
+#      stay in: WordPress.org requires the human-readable source and the
+#      build steps for every compiled file (guideline 4).
 #   5. Zips the staged copy to ./dist/timeslate-<version>.zip with
 #      `timeslate/` as the top-level folder inside.
 #
@@ -62,12 +64,9 @@ rsync -a \
   --exclude='/node_modules' \
   --exclude='/tools' \
   --exclude='/dist' \
-  --exclude='/package.json' \
   --exclude='/package-lock.json' \
   --exclude='/CLAUDE.md' \
-  --exclude='/README.md' \
   --exclude='/memory' \
-  --exclude='/assets/blocks/src' \
   --exclude='/tests' \
   --exclude='*.log' \
   --exclude='*.swp' \
@@ -78,9 +77,15 @@ rsync -a \
 # the pattern list in sync with the rsync excludes above.
 SNEAK=(
   ".git" ".github" ".claude" ".vscode" ".idea"
-  "node_modules" "package.json" "CLAUDE.md"
-  "assets/blocks/src"
+  "node_modules" "package-lock.json" "CLAUDE.md" "tools" "dist"
 )
+# And the opposite check: the source WordPress.org requires must be there.
+for item in "assets/blocks/src/form/view.js" "package.json"; do
+  if [[ ! -e "$STAGE_DIR/$item" ]]; then
+    echo "MISSING: $item absent from staged copy — aborting" >&2
+    exit 1
+  fi
+done
 for item in "${SNEAK[@]}"; do
   if [[ -e "$STAGE_DIR/$item" ]]; then
     echo "LEAK: $item present in staged copy — aborting" >&2

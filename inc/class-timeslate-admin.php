@@ -60,34 +60,34 @@ final class Timeslate_Admin {
 		return array(
 			'cb'                 => $cols['cb'] ?? '',
 			'title'              => __( 'Customer', 'timeslate' ),
-			'ts_booking_date'    => __( 'Date', 'timeslate' ),
-			'ts_booking_time'    => __( 'Time', 'timeslate' ),
-			'ts_people'           => __( 'People', 'timeslate' ),
-			'ts_status'          => __( 'Status', 'timeslate' ),
-			'ts_email'           => __( 'Email', 'timeslate' ),
-			'ts_phone'           => __( 'Phone', 'timeslate' ),
+			'timeslate_booking_date'    => __( 'Date', 'timeslate' ),
+			'timeslate_booking_time'    => __( 'Time', 'timeslate' ),
+			'timeslate_people'           => __( 'People', 'timeslate' ),
+			'timeslate_status'          => __( 'Status', 'timeslate' ),
+			'timeslate_email'           => __( 'Email', 'timeslate' ),
+			'timeslate_phone'           => __( 'Phone', 'timeslate' ),
 		);
 	}
 
 	public static function render_column( string $col, int $post_id ): void {
 		switch ( $col ) {
-			case 'ts_booking_date':
-				$date = (string) get_post_meta( $post_id, '_ts_date', true );
+			case 'timeslate_booking_date':
+				$date = (string) get_post_meta( $post_id, '_timeslate_date', true );
 				echo $date ? esc_html( $date ) : '<span class="ts-muted">&mdash;</span>';
 				break;
 
-			case 'ts_booking_time':
-				$time = (string) get_post_meta( $post_id, '_ts_time', true );
+			case 'timeslate_booking_time':
+				$time = (string) get_post_meta( $post_id, '_timeslate_time', true );
 				echo $time ? esc_html( $time ) : '<span class="ts-muted">&mdash;</span>';
 				break;
 
-			case 'ts_people':
-				$people = (int) get_post_meta( $post_id, '_ts_people', true );
+			case 'timeslate_people':
+				$people = (int) get_post_meta( $post_id, '_timeslate_people', true );
 				echo esc_html( (string) $people );
 				break;
 
-			case 'ts_status':
-				$status = (string) get_post_meta( $post_id, '_ts_status', true );
+			case 'timeslate_status':
+				$status = (string) get_post_meta( $post_id, '_timeslate_status', true );
 				$status = $status ?: 'pending';
 				printf(
 					'<span class="ts-status-badge ts-status-badge--%s">%s</span>',
@@ -96,8 +96,8 @@ final class Timeslate_Admin {
 				);
 				break;
 
-			case 'ts_email':
-				$email = (string) get_post_meta( $post_id, '_ts_email', true );
+			case 'timeslate_email':
+				$email = (string) get_post_meta( $post_id, '_timeslate_email', true );
 				if ( '' === $email ) {
 					echo '<span class="ts-muted">&mdash;</span>';
 					break;
@@ -108,8 +108,8 @@ final class Timeslate_Admin {
 				);
 				break;
 
-			case 'ts_phone':
-				$phone = (string) get_post_meta( $post_id, '_ts_phone', true );
+			case 'timeslate_phone':
+				$phone = (string) get_post_meta( $post_id, '_timeslate_phone', true );
 				echo $phone ? esc_html( $phone ) : '<span class="ts-muted">&mdash;</span>';
 				break;
 		}
@@ -118,8 +118,8 @@ final class Timeslate_Admin {
 	// ---- Sorting ------------------------------------------------------
 
 	public static function sortable_columns( array $cols ): array {
-		$cols['ts_booking_date'] = 'ts_booking_date';
-		$cols['ts_booking_time'] = 'ts_booking_time';
+		$cols['timeslate_booking_date'] = 'timeslate_booking_date';
+		$cols['timeslate_booking_time'] = 'timeslate_booking_time';
 		return $cols;
 	}
 
@@ -132,11 +132,11 @@ final class Timeslate_Admin {
 		}
 
 		$orderby = (string) $query->get( 'orderby' );
-		if ( 'ts_booking_date' === $orderby ) {
-			$query->set( 'meta_key', '_ts_date' );
+		if ( 'timeslate_booking_date' === $orderby ) {
+			$query->set( 'meta_key', '_timeslate_date' );
 			$query->set( 'orderby', 'meta_value' );
-		} elseif ( 'ts_booking_time' === $orderby ) {
-			$query->set( 'meta_key', '_ts_time' );
+		} elseif ( 'timeslate_booking_time' === $orderby ) {
+			$query->set( 'meta_key', '_timeslate_time' );
 			$query->set( 'orderby', 'meta_value' );
 		}
 	}
@@ -148,14 +148,14 @@ final class Timeslate_Admin {
 			return $actions;
 		}
 
-		$current = (string) get_post_meta( $post->ID, '_ts_status', true );
+		$current = (string) get_post_meta( $post->ID, '_timeslate_status', true );
 		$current = $current ?: 'pending';
 		$new     = array();
 
 		$transitions = self::allowed_transitions( $current );
 		foreach ( $transitions as $to => $label ) {
 			$url = self::status_url( $post->ID, $to );
-			$new[ 'ts_' . $to ] = sprintf(
+			$new[ 'timeslate_' . $to ] = sprintf(
 				'<a href="%1$s" class="ts-row-action ts-row-action--%2$s">%3$s</a>',
 				esc_url( $url ),
 				esc_attr( $to ),
@@ -223,13 +223,17 @@ final class Timeslate_Admin {
 		}
 		check_admin_referer( self::STATUS_ACTION . '_' . $booking_id );
 
+		if ( Timeslate_CPT::POST_TYPE !== get_post_type( $booking_id ) ) {
+			wp_die( esc_html__( 'That is not a booking.', 'timeslate' ), '', 400 );
+		}
+
 		if ( ! in_array( $to, Timeslate_CPT::STATUSES, true ) ) {
 			wp_die( esc_html__( 'Invalid booking status.', 'timeslate' ), '', 400 );
 		}
 
-		$from = (string) get_post_meta( $booking_id, '_ts_status', true ) ?: 'pending';
+		$from = (string) get_post_meta( $booking_id, '_timeslate_status', true ) ?: 'pending';
 
-		update_post_meta( $booking_id, '_ts_status', $to );
+		update_post_meta( $booking_id, '_timeslate_status', $to );
 
 		// Trigger transactional email for transitions that the customer
 		// cares about (confirmation, cancellation). Gate on the class
@@ -353,16 +357,16 @@ final class Timeslate_Admin {
 	 * owners can fix typos in customer names.
 	 */
 	public static function render_details_box( WP_Post $post ): void {
-		$date     = (string) get_post_meta( $post->ID, '_ts_date', true );
-		$time     = (string) get_post_meta( $post->ID, '_ts_time', true );
-		$people    = (int) get_post_meta( $post->ID, '_ts_people', true );
-		$duration = (int) get_post_meta( $post->ID, '_ts_duration_mins', true );
-		$name     = (string) get_post_meta( $post->ID, '_ts_name', true );
-		$email    = (string) get_post_meta( $post->ID, '_ts_email', true );
-		$phone    = (string) get_post_meta( $post->ID, '_ts_phone', true );
-		$notes    = (string) get_post_meta( $post->ID, '_ts_notes', true );
-		$status   = (string) get_post_meta( $post->ID, '_ts_status', true ) ?: 'pending';
-		$ip       = (string) get_post_meta( $post->ID, '_ts_ip', true );
+		$date     = (string) get_post_meta( $post->ID, '_timeslate_date', true );
+		$time     = (string) get_post_meta( $post->ID, '_timeslate_time', true );
+		$people    = (int) get_post_meta( $post->ID, '_timeslate_people', true );
+		$duration = (int) get_post_meta( $post->ID, '_timeslate_duration_mins', true );
+		$name     = (string) get_post_meta( $post->ID, '_timeslate_name', true );
+		$email    = (string) get_post_meta( $post->ID, '_timeslate_email', true );
+		$phone    = (string) get_post_meta( $post->ID, '_timeslate_phone', true );
+		$notes    = (string) get_post_meta( $post->ID, '_timeslate_notes', true );
+		$status   = (string) get_post_meta( $post->ID, '_timeslate_status', true ) ?: 'pending';
+		$ip       = (string) get_post_meta( $post->ID, '_timeslate_ip', true );
 
 		// Friendly date / time using the site's locale + settings.
 		$date_str = '';
@@ -484,7 +488,7 @@ final class Timeslate_Admin {
 	 * state changes.
 	 */
 	public static function render_actions_box( WP_Post $post ): void {
-		$status      = (string) get_post_meta( $post->ID, '_ts_status', true ) ?: 'pending';
+		$status      = (string) get_post_meta( $post->ID, '_timeslate_status', true ) ?: 'pending';
 		$transitions = self::allowed_transitions( $status );
 
 		?>

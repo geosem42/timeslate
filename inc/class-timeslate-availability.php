@@ -61,7 +61,11 @@ final class Timeslate_Availability {
 		);
 
 		// ---- Validate date ------------------------------------------------
-		$date_obj = DateTimeImmutable::createFromFormat( 'Y-m-d', $date );
+		// `wp_timezone()` returns the site's tz. The day is parsed at
+		// midnight in that zone ('!' zeroes the time) so it never drifts
+		// into the day before or after when the server clock is UTC.
+		$tz       = wp_timezone();
+		$date_obj = DateTimeImmutable::createFromFormat( '!Y-m-d', $date, $tz );
 		if ( ! $date_obj || $date_obj->format( 'Y-m-d' ) !== $date ) {
 			$result['status'] = self::STATUS_INVALID_DATE;
 			return $result;
@@ -76,13 +80,11 @@ final class Timeslate_Availability {
 		}
 
 		// ---- Date window (past / too-far) --------------------------------
-		// `wp_timezone()` returns the site's tz; we anchor `now` to it so
-		// midnight-edge comparisons line up with the owner's clock rather
-		// than the server's.
-		$tz       = wp_timezone();
+		// `now` is anchored to the site's tz so midnight-edge comparisons
+		// line up with the owner's clock rather than the server's.
 		$now      = new DateTimeImmutable( 'now', $tz );
 		$today    = $now->setTime( 0, 0, 0 );
-		$date_cmp = $date_obj->setTimezone( $tz )->setTime( 0, 0, 0 );
+		$date_cmp = $date_obj;
 
 		if ( $date_cmp < $today ) {
 			$result['status'] = self::STATUS_PAST;
@@ -178,11 +180,11 @@ final class Timeslate_Availability {
 				'no_found_rows'  => true,
 				'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 					array(
-						'key'   => '_ts_date',
+						'key'   => '_timeslate_date',
 						'value' => $date,
 					),
 					array(
-						'key'     => '_ts_status',
+						'key'     => '_timeslate_status',
 						'value'   => array( 'pending', 'confirmed', 'completed' ),
 						'compare' => 'IN',
 					),
@@ -201,9 +203,9 @@ final class Timeslate_Availability {
 	private static function normalize_bookings( array $posts ): array {
 		$out = array();
 		foreach ( $posts as $post ) {
-			$time     = (string) get_post_meta( $post->ID, '_ts_time', true );
-			$people    = (int) get_post_meta( $post->ID, '_ts_people', true );
-			$duration = (int) get_post_meta( $post->ID, '_ts_duration_mins', true );
+			$time     = (string) get_post_meta( $post->ID, '_timeslate_time', true );
+			$people    = (int) get_post_meta( $post->ID, '_timeslate_people', true );
+			$duration = (int) get_post_meta( $post->ID, '_timeslate_duration_mins', true );
 
 			$start = self::time_to_minutes( $time );
 			if ( $start < 0 || $people < 1 || $duration < 15 ) {

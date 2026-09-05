@@ -11,8 +11,7 @@
  * Usage (run from the plugin root):
  *   php tools/make-pot.php
  *
- * Excluded from the shipped Envato zip; see the Distribution hygiene
- * section in CLAUDE.md.
+ * Excluded from the shipped zip by tools/package.sh.
  *
  * @package Timeslate
  */
@@ -148,7 +147,7 @@ ksort( $entries );
 
 $now    = gmdate( 'Y-m-d H:i+0000' );
 $header = <<<POT
-# Copyright (C) 2026 Savor
+# Copyright (C) 2026 George Semaan
 # This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""

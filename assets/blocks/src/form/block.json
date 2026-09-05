@@ -6,7 +6,7 @@
 	"category": "timeslate",
 	"description": "Multi-step booking wizard — customers pick date, number of people, and time, enter their contact details, and reserve a table.",
 	"icon": "calendar-alt",
-	"keywords": [ "booking", "booking", "form", "wizard" ],
+	"keywords": [ "booking", "appointment", "form", "wizard" ],
 	"textdomain": "timeslate",
 	"supports": {
 		"html": false,

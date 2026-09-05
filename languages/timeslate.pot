@@ -1,106 +1,99 @@
-# Copyright (C) 2026 Savor
+# Copyright (C) 2026 George Semaan
 # This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""
 "Project-Id-Version: Timeslate 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-21 21:58+0000\n"
+"POT-Creation-Date: 2026-09-05 16:39+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: timeslate\n"
 
-#: assets/blocks/src/form/view.js:473
+#: assets/blocks/src/form/view.js:632
 msgid "%d / 500"
 msgstr ""
 
-#: assets/blocks/src/form/view.js:304
-#: assets/blocks/src/form/view.js:485
-msgid "%d guest"
-msgstr ""
-
-#: inc/class-timeslate-admin.php:393
-#: inc/class-timeslate-emails.php:294
-#: templates/cancel-page.php:69
-#: templates/email-summary.php:20
-msgid "%d guest"
-msgid_plural "%d guests"
-msgstr[0] ""
-msgstr[1] ""
-
-#: assets/blocks/src/form/view.js:304
-#: assets/blocks/src/form/view.js:485
-msgid "%d guests"
-msgstr ""
-
-#: inc/class-timeslate-settings-admin.php:251
+#: inc/class-timeslate-settings-admin.php:250
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/class-timeslate-admin.php:403
+#: inc/class-timeslate-admin.php:407
 msgid "%d minutes"
 msgstr ""
 
-#: assets/blocks/src/form/view.js:393
-msgid "%d seats left"
+#: assets/blocks/src/form/view.js:452
+#: assets/blocks/src/form/view.js:644
+msgid "%d people"
+msgstr ""
+
+#: assets/blocks/src/form/view.js:452
+#: assets/blocks/src/form/view.js:644
+msgid "%d person"
+msgstr ""
+
+#: inc/class-timeslate-admin.php:397
+#: inc/class-timeslate-emails.php:294
+#: templates/cancel-page.php:69
+#: templates/email-summary.php:20
+msgid "%d person"
+msgid_plural "%d people"
+msgstr[0] ""
+msgstr[1] ""
+
+#: assets/blocks/src/form/view.js:549
+msgid "%d places left"
 msgstr ""
 
 #: inc/class-timeslate-emails.php:277
 msgid "A new booking has been received ({status})."
 msgstr ""
 
-#: inc/class-timeslate-admin.php:341
+#: inc/class-timeslate-admin.php:345
 msgid "Actions"
 msgstr ""
 
-#: inc/class-timeslate-cpt.php:58
+#: inc/class-timeslate-cpt.php:70
 msgid "Add New"
 msgstr ""
 
-#: inc/class-timeslate-cpt.php:59
+#: inc/class-timeslate-cpt.php:71
 msgid "Add New Booking"
 msgstr ""
 
-#: inc/class-timeslate-calendar.php:116
-msgid "Add booking"
-msgstr ""
-
-#: inc/class-timeslate-settings-admin.php:196
+#: inc/class-timeslate-settings-admin.php:195
 msgid "Add date"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:145
+#: inc/class-timeslate-settings-admin.php:144
 msgid "Add period"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:456
+#: inc/class-timeslate-settings-admin.php:354
 msgid "Advanced"
 msgstr ""
 
-#: inc/class-timeslate-cpt.php:66
+#: inc/class-timeslate-cpt.php:78
 msgid "All Bookings"
 msgstr ""
 
-#: assets/blocks/src/form/view.js:457
+#: assets/blocks/src/form/view.js:616
 msgid "Anything we should know?"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:310
+#: inc/class-timeslate-settings-admin.php:309
 msgid "Approval flow"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:318
+#: inc/class-timeslate-settings-admin.php:317
 msgid "Auto-approve new bookings"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:373
-msgid "Available placeholders:"
-msgstr ""
-
-#: assets/blocks/src/form/view.js:377
+#: assets/blocks/src/form/view.js:302
+#: assets/blocks/src/form/view.js:533
 msgid "Available times"
 msgstr ""
 
@@ -112,15 +105,15 @@ msgstr ""
 msgid "Back to the site"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:189
+#: inc/class-timeslate-settings-admin.php:188
 msgid "Blackout dates"
 msgstr ""
 
-#: inc/class-timeslate-cpt.php:56
+#: inc/class-timeslate-cpt.php:68
 msgid "Booking"
 msgstr ""
 
-#: inc/class-timeslate-admin.php:332
+#: inc/class-timeslate-admin.php:336
 msgid "Booking Details"
 msgstr ""
 
@@ -129,31 +122,39 @@ msgstr ""
 msgid "Booking Settings"
 msgstr ""
 
-#: inc/class-timeslate-admin.php:265
+#: inc/class-timeslate-tokens.php:170
+msgid "Booking cancelled"
+msgstr ""
+
+#: inc/class-timeslate-admin.php:269
 msgid "Booking cancelled."
 msgstr ""
 
-#: inc/class-timeslate-admin.php:263
+#: inc/class-timeslate-admin.php:267
 msgid "Booking confirmed."
+msgstr ""
+
+#: inc/class-timeslate-emails.php:322
+msgid "Booking date"
 msgstr ""
 
 #: assets/blocks/src/form/view.js:124
 msgid "Booking failed. Please try again."
 msgstr ""
 
-#: inc/class-timeslate-admin.php:266
+#: inc/class-timeslate-admin.php:270
 msgid "Booking marked as no-show."
 msgstr ""
 
-#: inc/class-timeslate-admin.php:264
+#: inc/class-timeslate-admin.php:268
 msgid "Booking marked completed."
 msgstr ""
 
-#: inc/class-timeslate-admin.php:262
+#: inc/class-timeslate-admin.php:266
 msgid "Booking moved back to pending."
 msgstr ""
 
-#: inc/class-timeslate-tokens.php:152
+#: inc/class-timeslate-tokens.php:157
 msgid "Booking not found"
 msgstr ""
 
@@ -161,39 +162,38 @@ msgstr ""
 msgid "Booking steps"
 msgstr ""
 
-#: inc/class-timeslate-admin.php:270
+#: inc/class-timeslate-emails.php:323
+msgid "Booking time"
+msgstr ""
+
+#: inc/class-timeslate-admin.php:274
 msgid "Booking updated."
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:222
+#: inc/class-timeslate-settings-admin.php:221
 msgid "Booking window"
 msgstr ""
 
-#: inc/class-timeslate-cpt.php:55
-#: inc/class-timeslate-cpt.php:57
+#: inc/class-timeslate-cpt.php:67
+#: inc/class-timeslate-cpt.php:69
 msgid "Bookings"
 msgstr ""
 
-#: assets/blocks/src/form/view.js:551
-#: inc/class-timeslate-rest.php:263
+#: assets/blocks/src/form/view.js:710
+#: inc/class-timeslate-rest.php:394
 msgid "Bookings are not accepted on that date."
 msgstr ""
 
-#: inc/class-timeslate-calendar.php:114
-msgid "Bookings calendar"
-msgstr ""
-
-#: inc/class-timeslate-cpt.php:68
+#: inc/class-timeslate-cpt.php:80
 msgid "Bookings list"
 msgstr ""
 
-#: inc/class-timeslate-cpt.php:69
+#: inc/class-timeslate-cpt.php:81
 msgid "Bookings list navigation"
 msgstr ""
 
-#: inc/class-timeslate-calendar.php:41
-#: inc/class-timeslate-calendar.php:42
-msgid "Calendar"
+#: inc/class-timeslate-emails.php:326
+msgid "Business name"
 msgstr ""
 
 #: inc/class-timeslate-admin.php:183
@@ -205,24 +205,20 @@ msgstr ""
 msgid "Cancel this request"
 msgstr ""
 
-#: inc/class-timeslate-tokens.php:168
+#: inc/class-timeslate-tokens.php:173
 #: templates/email-customer-confirmed.php:33
-msgid "Cancel your reservation"
+msgid "Cancel your booking"
 msgstr ""
 
-#: inc/class-timeslate-admin.php:539
+#: inc/class-timeslate-admin.php:543
 msgid "Cancelled"
 msgstr ""
 
-#: inc/class-timeslate-calendar.php:123
-msgid "Click an event to open that booking. Drag-to-create is disabled — add bookings via the booking form or the \"Add booking\" button."
+#: assets/blocks/src/form/view.js:371
+msgid "Choose a date"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:434
-msgid "Closing note"
-msgstr ""
-
-#: inc/class-timeslate-admin.php:538
+#: inc/class-timeslate-admin.php:542
 msgid "Completed"
 msgstr ""
 
@@ -230,15 +226,15 @@ msgstr ""
 msgid "Confirm"
 msgstr ""
 
+#: assets/blocks/src/form/view.js:193
+msgid "Confirm booking"
+msgstr ""
+
 #: templates/cancel-page.php:89
 msgid "Confirm cancellation"
 msgstr ""
 
-#: assets/blocks/src/form/view.js:193
-msgid "Confirm reservation"
-msgstr ""
-
-#: inc/class-timeslate-admin.php:537
+#: inc/class-timeslate-admin.php:541
 msgid "Confirmed"
 msgstr ""
 
@@ -251,15 +247,15 @@ msgid "Continue"
 msgstr ""
 
 #: assets/blocks/src/form/view.js:104
-#: assets/blocks/src/form/view.js:561
+#: assets/blocks/src/form/view.js:720
 msgid "Could not load availability. Please try again."
 msgstr ""
 
-#: inc/class-timeslate-rest.php:187
+#: inc/class-timeslate-rest.php:296
 msgid "Could not save the booking. Please try again."
 msgstr ""
 
-#: inc/class-timeslate-admin.php:494
+#: inc/class-timeslate-admin.php:498
 msgid "Current status"
 msgstr ""
 
@@ -268,7 +264,7 @@ msgid "Current status label"
 msgstr ""
 
 #: inc/class-timeslate-admin.php:62
-#: inc/class-timeslate-admin.php:420
+#: inc/class-timeslate-admin.php:424
 msgid "Customer"
 msgstr ""
 
@@ -296,66 +292,53 @@ msgstr ""
 msgid "Customer: request received"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:272
+#: inc/class-timeslate-settings-admin.php:271
 msgid "Customers must book at least this far ahead. Set to 0 to accept walk-up-style immediate bookings."
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:369
-msgid "Customize the subject line and the message text for each email the plugin sends. Leave a field blank to use the shipped default shown as the placeholder."
-msgstr ""
-
-#: assets/blocks/src/form/view.js:281
-#: assets/blocks/src/form/view.js:482
-#: assets/blocks/src/form/view.js:524
+#: assets/blocks/src/form/view.js:641
+#: assets/blocks/src/form/view.js:683
 #: inc/class-timeslate-admin.php:63
-#: inc/class-timeslate-admin.php:386
+#: inc/class-timeslate-admin.php:390
 #: templates/cancel-page.php:54
 #: templates/email-summary.php:34
 msgid "Date"
-msgstr ""
-
-#: inc/class-timeslate-calendar.php:99
-msgid "Day"
 msgstr ""
 
 #: inc/class-timeslate-emails.php:330
 msgid "Deep link into wp-admin (owner email only)"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:468
+#: inc/class-timeslate-settings-admin.php:366
 msgid "Delete all bookings and settings when the plugin is uninstalled"
 msgstr ""
 
-#: inc/class-timeslate-cpt.php:60
+#: inc/class-timeslate-cpt.php:72
 msgid "Edit Booking"
 msgstr ""
 
-#: assets/blocks/src/form/view.js:426
-#: assets/blocks/src/form/view.js:489
+#: assets/blocks/src/form/view.js:583
+#: assets/blocks/src/form/view.js:648
 #: inc/class-timeslate-admin.php:67
-#: inc/class-timeslate-admin.php:422
+#: inc/class-timeslate-admin.php:426
 #: templates/email-owner-new.php:25
 msgid "Email"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:367
-msgid "Email messages"
-msgstr ""
-
-#: inc/class-timeslate-settings-admin.php:173
+#: inc/class-timeslate-settings-admin.php:172
 msgid "End time"
 msgstr ""
 
-#: inc/class-timeslate-cpt.php:67
+#: inc/class-timeslate-cpt.php:79
 msgid "Filter bookings list"
 msgstr ""
 
-#: assets/blocks/src/form/view.js:557
-#: inc/class-timeslate-rest.php:269
+#: assets/blocks/src/form/view.js:716
+#: inc/class-timeslate-rest.php:400
 msgid "For parties that large, please call us directly."
 msgstr ""
 
-#: inc/class-timeslate-admin.php:442
+#: inc/class-timeslate-admin.php:446
 msgid "From IP"
 msgstr ""
 
@@ -370,51 +353,62 @@ msgstr ""
 #: inc/class-timeslate-emails.php:262
 msgid "Hi {name},
 
-Thanks for your reservation request at {site_name}. We've received it and will confirm by email as soon as we can."
+Thanks for your booking request at {site_name}. We've received it and will confirm by email as soon as we can."
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:236
+#: inc/class-timeslate-emails.php:272
+msgid "Hi {name},
+
+Your booking at {site_name} has been cancelled. The details below are for your records."
+msgstr ""
+
+#: inc/class-timeslate-emails.php:267
+msgid "Hi {name},
+
+Your booking at {site_name} is confirmed."
+msgstr ""
+
+#: inc/class-timeslate-settings-admin.php:235
 msgid "How long a table stays occupied per booking. 90–120 minutes is typical."
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:256
+#: inc/class-timeslate-settings-admin.php:255
 msgid "How often a booking slot appears in the time picker (e.g. every 30 minutes). For single-seating fine-dining formats, pair a longer interval like 120 minutes with a matching service duration."
 msgstr ""
 
-#: inc/class-timeslate-admin.php:227
+#: inc/class-timeslate-admin.php:231
 msgid "Invalid booking status."
 msgstr ""
 
-#: inc/class-timeslate-rest.php:126
-#: inc/class-timeslate-rest.php:271
+#: inc/class-timeslate-rest.php:140
+#: inc/class-timeslate-rest.php:235
+#: inc/class-timeslate-rest.php:402
 msgid "Invalid date."
 msgstr ""
 
-#: inc/class-timeslate-rest.php:104
+#: inc/class-timeslate-rest.php:167
+#: inc/class-timeslate-rest.php:213
 msgid "Invalid submission."
 msgstr ""
 
-#: inc/class-timeslate-rest.php:129
+#: inc/class-timeslate-rest.php:153
+#: inc/class-timeslate-rest.php:238
 msgid "Invalid time."
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:304
+#: inc/class-timeslate-settings-admin.php:303
 msgid "Larger groups are directed to call instead of booking online."
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:288
+#: inc/class-timeslate-settings-admin.php:287
 msgid "Latest a customer can book in advance. 60 days is a common default."
 msgstr ""
 
-#: inc/class-timeslate-tokens.php:93
+#: inc/class-timeslate-tokens.php:94
 msgid "Link is invalid or expired"
 msgstr ""
 
-#: inc/class-timeslate-calendar.php:102
-msgid "List"
-msgstr ""
-
-#: assets/blocks/src/form/view.js:344
+#: assets/blocks/src/form/view.js:500
 msgid "Loading times…"
 msgstr ""
 
@@ -422,28 +416,20 @@ msgstr ""
 msgid "Mark completed"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:294
-msgid "Max party size online"
+#: inc/class-timeslate-settings-admin.php:293
+msgid "Max number of people online"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:278
+#: inc/class-timeslate-settings-admin.php:277
 msgid "Maximum advance (days)"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:417
-msgid "Message"
-msgstr ""
-
-#: inc/class-timeslate-settings-admin.php:262
+#: inc/class-timeslate-settings-admin.php:261
 msgid "Minimum advance (hours)"
 msgstr ""
 
-#: inc/class-timeslate-calendar.php:101
-msgid "Month"
-msgstr ""
-
-#: assets/blocks/src/form/view.js:413
-#: assets/blocks/src/form/view.js:488
+#: assets/blocks/src/form/view.js:569
+#: assets/blocks/src/form/view.js:647
 #: templates/cancel-page.php:50
 #: templates/email-summary.php:30
 msgid "Name"
@@ -458,71 +444,85 @@ msgid "Network error. Please try again."
 msgstr ""
 
 #: templates/cancel-page.php:92
-msgid "Never mind, keep my reservation"
+msgid "Never mind, keep my booking"
 msgstr ""
 
-#: inc/class-timeslate-cpt.php:61
+#: inc/class-timeslate-cpt.php:73
 msgid "New Booking"
 msgstr ""
 
 #: inc/class-timeslate-emails.php:276
-msgid "New booking: {party} on {date} at {time}"
+msgid "New booking: {people} on {date} at {time}"
 msgstr ""
 
-#: inc/class-timeslate-cpt.php:65
+#: assets/blocks/src/form/view.js:388
+msgid "Next month"
+msgstr ""
+
+#: inc/class-timeslate-cpt.php:77
 msgid "No bookings found in Trash."
 msgstr ""
 
-#: inc/class-timeslate-cpt.php:64
+#: inc/class-timeslate-cpt.php:76
 msgid "No bookings found."
 msgstr ""
 
-#: inc/class-timeslate-admin.php:503
+#: inc/class-timeslate-admin.php:507
 msgid "No further transitions from this state."
 msgstr ""
 
-#: assets/blocks/src/form/view.js:371
-msgid "No times available for that date and party size. Try another date."
+#: assets/blocks/src/form/view.js:527
+msgid "No times available for that date and number of people. Try another date."
 msgstr ""
 
-#: assets/blocks/src/form/view.js:563
+#: assets/blocks/src/form/view.js:722
 msgid "No times available."
 msgstr ""
 
 #: inc/class-timeslate-admin.php:188
-#: inc/class-timeslate-admin.php:540
+#: inc/class-timeslate-admin.php:544
 msgid "No-show"
 msgstr ""
 
 #: assets/blocks/src/form/view.js:236
-#: assets/blocks/src/form/view.js:464
-#: assets/blocks/src/form/view.js:493
-#: inc/class-timeslate-admin.php:435
+#: assets/blocks/src/form/view.js:623
+#: assets/blocks/src/form/view.js:652
+#: inc/class-timeslate-admin.php:439
 #: templates/email-summary.php:53
 msgid "Notes"
 msgstr ""
 
-#: inc/class-timeslate-rest.php:144
+#: inc/class-timeslate-rest.php:253
 msgid "Notes must be under 500 characters."
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:332
+#: inc/class-timeslate-settings-admin.php:331
 msgid "Notifications"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:336
+#: inc/class-timeslate-settings-admin.php:335
 msgid "Notify these addresses"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:471
+#: assets/blocks/src/form/view.js:291
+#: assets/blocks/src/form/view.js:464
+#: inc/class-timeslate-admin.php:393
+msgid "Number of people"
+msgstr ""
+
+#: inc/class-timeslate-emails.php:324
+msgid "Number of people (for example \"4 people\")"
+msgstr ""
+
+#: inc/class-timeslate-settings-admin.php:369
 msgid "Off by default, so deactivating or deleting the plugin preserves your data. Turn on only if you want a clean slate on removal."
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:460
+#: inc/class-timeslate-settings-admin.php:358
 msgid "On uninstall"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:345
+#: inc/class-timeslate-settings-admin.php:344
 msgid "One email per line (or comma-separated). Every address here gets an email for each new booking."
 msgstr ""
 
@@ -530,139 +530,115 @@ msgstr ""
 msgid "Open in admin"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:112
+#: inc/class-timeslate-settings-admin.php:111
 msgid "Opening hours"
 msgstr ""
 
-#: assets/blocks/src/form/view.js:460
-msgid "Optional — allergies, accessibility needs, special occasion."
-msgstr ""
-
-#: inc/class-timeslate-settings-admin.php:444
-msgid "Optional. Shown below the booking summary — useful for dress code, parking, arrival instructions, or a personal sign-off."
+#: assets/blocks/src/form/view.js:619
+msgid "Optional. Anything we should know before your visit."
 msgstr ""
 
 #: inc/class-timeslate-emails.php:343
 msgid "Owner: new booking notification"
 msgstr ""
 
-#: assets/blocks/src/form/view.js:484
-#: assets/blocks/src/form/view.js:532
-#: inc/class-timeslate-admin.php:65
-#: templates/cancel-page.php:62
-#: templates/email-summary.php:42
-msgid "Party"
-msgstr ""
-
-#: assets/blocks/src/form/view.js:294
-#: inc/class-timeslate-admin.php:389
-msgid "Party size"
-msgstr ""
-
-#: inc/class-timeslate-emails.php:324
-msgid "Party size (e.g. \"4 guests\")"
-msgstr ""
-
-#: inc/class-timeslate-rest.php:132
-msgid "Party size must be at least 1."
-msgstr ""
-
-#: inc/class-timeslate-admin.php:536
+#: inc/class-timeslate-admin.php:540
 msgid "Pending"
 msgstr ""
 
-#: assets/blocks/src/form/view.js:439
-#: assets/blocks/src/form/view.js:490
+#: assets/blocks/src/form/view.js:643
+#: assets/blocks/src/form/view.js:691
+#: inc/class-timeslate-admin.php:65
+#: templates/cancel-page.php:62
+#: templates/email-summary.php:42
+msgid "People"
+msgstr ""
+
+#: assets/blocks/src/form/view.js:597
+#: assets/blocks/src/form/view.js:649
 #: inc/class-timeslate-admin.php:68
-#: inc/class-timeslate-admin.php:429
+#: inc/class-timeslate-admin.php:433
 #: templates/email-owner-new.php:33
 msgid "Phone"
 msgstr ""
 
-#: assets/blocks/src/form/view.js:332
+#: assets/blocks/src/form/view.js:488
 msgid "Pick a date to see available times."
 msgstr ""
 
-#: templates/email-customer-confirmed.php:32
-msgid "Plans changed? %s so we can offer the table to someone else."
+#: assets/blocks/src/form/view.js:283
+msgid "Pick a date to see number of people and available times."
 msgstr ""
 
-#: assets/blocks/src/form/view.js:553
-#: inc/class-timeslate-rest.php:265
+#: templates/email-customer-confirmed.php:32
+msgid "Plans changed? %s so we can offer the slot to someone else."
+msgstr ""
+
+#: assets/blocks/src/form/view.js:712
+#: inc/class-timeslate-rest.php:396
 msgid "Please choose a future date."
 msgstr ""
 
-#: inc/class-timeslate-rest.php:141
-msgid "Please enter a phone number."
+#: inc/class-timeslate-rest.php:181
+#: inc/class-timeslate-rest.php:241
+msgid "Please choose at least one person."
 msgstr ""
 
-#: inc/class-timeslate-rest.php:138
+#: inc/class-timeslate-rest.php:247
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: inc/class-timeslate-rest.php:135
+#: inc/class-timeslate-rest.php:244
 msgid "Please enter a valid name."
 msgstr ""
 
-#: assets/blocks/src/form/view.js:559
+#: inc/class-timeslate-rest.php:250
+msgid "Please enter a valid phone number."
+msgstr ""
+
+#: assets/blocks/src/form/view.js:718
 msgid "Please pick a valid date."
 msgstr ""
 
-#: assets/blocks/src/form/view.js:536
-#: inc/class-timeslate-admin.php:439
+#: assets/blocks/src/form/view.js:378
+msgid "Previous month"
+msgstr ""
+
+#: assets/blocks/src/form/view.js:695
+#: inc/class-timeslate-admin.php:443
 msgid "Reference"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:215
+#: inc/class-timeslate-settings-admin.php:214
 msgid "Remove date"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:182
+#: inc/class-timeslate-settings-admin.php:181
 msgid "Remove period"
 msgstr ""
 
-#: assets/blocks/src/form/view.js:519
+#: assets/blocks/src/form/view.js:678
 msgid "Request received."
-msgstr ""
-
-#: inc/class-timeslate-tokens.php:165
-msgid "Reservation cancelled"
-msgstr ""
-
-#: inc/class-timeslate-emails.php:322
-msgid "Reservation date"
-msgstr ""
-
-#: inc/class-timeslate-emails.php:323
-msgid "Reservation time"
 msgstr ""
 
 #: assets/blocks/src/form/view.js:192
 msgid "Reserving…"
 msgstr ""
 
-#: inc/class-timeslate-emails.php:326
-msgid "Restaurant name"
-msgstr ""
-
 #: assets/blocks/src/form/view.js:237
-#: assets/blocks/src/form/view.js:498
+#: assets/blocks/src/form/view.js:657
 msgid "Review"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:100
+#: inc/class-timeslate-settings-admin.php:99
 msgid "Save changes"
 msgstr ""
 
-#: inc/blocks.php:36
-msgid "Timeslate"
-msgstr ""
-
-#: inc/class-timeslate-cpt.php:63
+#: inc/class-timeslate-cpt.php:75
 msgid "Search Bookings"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:180
+#: inc/class-timeslate-settings-admin.php:179
 msgid "Seat capacity"
 msgstr ""
 
@@ -674,90 +650,82 @@ msgstr ""
 msgid "Sent by %s"
 msgstr ""
 
-#: inc/class-timeslate-admin.php:399
+#: inc/class-timeslate-admin.php:403
 msgid "Service duration"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:226
+#: inc/class-timeslate-settings-admin.php:225
 msgid "Service duration (minutes)"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:114
-msgid "Set the days and service periods when the restaurant accepts reservations. Each period has its own seat capacity — perfect for a lunch service that seats fewer covers than dinner."
+#: inc/class-timeslate-settings-admin.php:113
+msgid "Set the days and periods when you take bookings. Each period has its own capacity, so a morning session can take fewer people than an afternoon one."
 msgstr ""
 
 #: inc/class-timeslate-settings-admin.php:42
 msgid "Settings"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:511
+#: inc/class-timeslate-settings-admin.php:409
 msgid "Settings saved."
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:427
-msgid "Shown above the booking summary. Line breaks are preserved."
-msgstr ""
-
-#: inc/class-timeslate-settings-admin.php:242
+#: inc/class-timeslate-settings-admin.php:241
 msgid "Slot interval"
 msgstr ""
 
-#: inc/class-timeslate-tokens.php:108
+#: inc/class-timeslate-tokens.php:113
 msgid "Something went wrong"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:191
-msgid "Specific dates the restaurant is closed — holidays, private events, renovations. Bookings are blocked on these dates regardless of opening hours."
+#: inc/class-timeslate-settings-admin.php:190
+msgid "Specific dates you are closed, such as holidays or private events. Bookings are blocked on these dates whatever your opening hours say."
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:168
+#: inc/class-timeslate-settings-admin.php:167
 msgid "Start time"
 msgstr ""
 
 #: inc/class-timeslate-admin.php:66
-#: inc/class-timeslate-admin.php:409
+#: inc/class-timeslate-admin.php:413
 #: templates/cancel-page.php:77
 #: templates/email-summary.php:47
 msgid "Status"
-msgstr ""
-
-#: inc/class-timeslate-calendar.php:126
-msgid "Status color key"
 msgstr ""
 
 #: assets/blocks/src/form/edit.js:29
 msgid "Subheading"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:402
-msgid "Subject"
-msgstr ""
-
-#: inc/class-timeslate-admin.php:440
+#: inc/class-timeslate-admin.php:444
 msgid "Submitted"
 msgstr ""
 
 #: templates/cancel-page.php:32
-msgid "Thanks for letting us know — your reservation has been cancelled and a confirmation has been emailed to you."
+msgid "Thanks for letting us know. Your booking has been cancelled and a confirmation has been emailed to you."
 msgstr ""
 
-#: inc/class-timeslate-rest.php:212
-msgid "Thanks — we've received your request and will confirm by email shortly."
+#: inc/class-timeslate-rest.php:321
+msgid "Thanks. We have received your request and will confirm by email shortly."
 msgstr ""
 
-#: assets/blocks/src/form/view.js:555
+#: assets/blocks/src/form/view.js:714
 msgid "That date is beyond our booking window."
 msgstr ""
 
-#: inc/class-timeslate-rest.php:267
+#: inc/class-timeslate-rest.php:398
 msgid "That date is beyond the booking window."
 msgstr ""
 
-#: inc/class-timeslate-rest.php:273
+#: inc/class-timeslate-admin.php:227
+msgid "That is not a booking."
+msgstr ""
+
+#: inc/class-timeslate-rest.php:404
 msgid "That slot is no longer available."
 msgstr ""
 
-#: inc/class-timeslate-rest.php:165
+#: inc/class-timeslate-rest.php:274
 msgid "That time slot is no longer available."
 msgstr ""
 
@@ -765,80 +733,75 @@ msgstr ""
 msgid "The multi-step booking wizard renders on the frontend. Opening hours, capacity, and the booking window are configured under Bookings → Settings."
 msgstr ""
 
-#: assets/blocks/src/form/view.js:549
-#: inc/class-timeslate-rest.php:261
-msgid "The restaurant is closed on that day."
-msgstr ""
-
 #: templates/cancel-page.php:40
-msgid "This reservation can no longer be cancelled. If you need help, please contact us directly."
+msgid "This booking can no longer be cancelled. If you need help, please contact us directly."
 msgstr ""
 
 #: assets/blocks/src/form/render.php:45
-msgid "This reservation form requires JavaScript. Please call the restaurant directly to book."
+msgid "This booking form requires JavaScript. Please call us directly to book."
 msgstr ""
 
 #: templates/cancel-page.php:36
-msgid "This reservation has already been cancelled. There's nothing more to do."
+msgid "This booking has already been cancelled. There's nothing more to do."
 msgstr ""
 
-#: inc/class-timeslate-tokens.php:167
-msgid "This reservation is already cancelled"
+#: inc/class-timeslate-tokens.php:172
+msgid "This booking is already cancelled"
 msgstr ""
 
-#: assets/blocks/src/form/view.js:315
-#: assets/blocks/src/form/view.js:483
-#: assets/blocks/src/form/view.js:528
+#: assets/blocks/src/form/view.js:642
+#: assets/blocks/src/form/view.js:687
 #: inc/class-timeslate-admin.php:64
-#: inc/class-timeslate-admin.php:387
+#: inc/class-timeslate-admin.php:391
 #: templates/cancel-page.php:58
 #: templates/email-summary.php:38
 msgid "Time"
 msgstr ""
 
-#: inc/class-timeslate-calendar.php:98
-msgid "Today"
+#: inc/blocks.php:35
+msgid "Timeslate"
 msgstr ""
 
-#: inc/class-timeslate-rest.php:237
+#: inc/class-timeslate-rest.php:368
 msgid "Too many attempts. Please try again in a few minutes."
 msgstr ""
 
-#: inc/class-timeslate-cpt.php:62
+#: inc/class-timeslate-cpt.php:74
 msgid "View Booking"
 msgstr ""
 
-#: inc/class-timeslate-tokens.php:96
-msgid "We couldn't find that reservation, or the link is no longer valid. If you need help, please contact the restaurant directly."
+#: assets/blocks/src/form/view.js:708
+#: inc/class-timeslate-rest.php:392
+msgid "We are closed on that day."
 msgstr ""
 
-#: inc/class-timeslate-tokens.php:153
-msgid "We couldn't load this reservation."
+#: inc/class-timeslate-tokens.php:97
+msgid "We couldn't find that booking, or the link is no longer valid. If you need help, please contact us directly."
+msgstr ""
+
+#: inc/class-timeslate-tokens.php:158
+msgid "We couldn't load this booking."
 msgstr ""
 
 #: inc/class-timeslate-emails.php:261
-msgid "We received your reservation request — {site_name}"
+msgid "We received your booking request at {site_name}"
 msgstr ""
 
 #: assets/blocks/src/form/view.js:201
 msgid "Website"
 msgstr ""
 
-#: inc/class-timeslate-calendar.php:100
-msgid "Week"
-msgstr ""
-
 #: assets/blocks/src/form/view.js:234
-#: assets/blocks/src/form/view.js:275
+#: assets/blocks/src/form/view.js:266
 msgid "When & who"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:321
+#: inc/class-timeslate-settings-admin.php:320
 msgid "When on, bookings that fit the available capacity are confirmed immediately. When off, new bookings arrive as \"pending\" for you to review."
 msgstr ""
 
 #: templates/cancel-page.php:44
-msgid "You are about to cancel the following reservation:"
+msgid "You are about to cancel the following booking:"
 msgstr ""
 
 #: templates/email-customer-cancelled.php:31
@@ -849,38 +812,38 @@ msgstr ""
 msgid "You do not have permission to change this booking."
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:483
+#: inc/class-timeslate-settings-admin.php:381
 msgid "You do not have permission to edit these settings."
 msgstr ""
 
-#: assets/blocks/src/form/view.js:518
+#: assets/blocks/src/form/view.js:677
 msgid "You're booked."
 msgstr ""
 
-#: assets/blocks/src/form/view.js:408
-msgid "Your details"
-msgstr ""
-
 #: inc/class-timeslate-emails.php:271
-msgid "Your reservation at {site_name} has been cancelled"
+msgid "Your booking at {site_name} has been cancelled"
 msgstr ""
 
 #: inc/class-timeslate-emails.php:266
-msgid "Your reservation at {site_name} is confirmed — {date} at {time}"
+msgid "Your booking at {site_name} is confirmed for {date} at {time}"
 msgstr ""
 
-#: inc/class-timeslate-rest.php:211
-msgid "Your reservation is confirmed. We look forward to having you."
+#: inc/class-timeslate-rest.php:320
+msgid "Your booking is confirmed."
 msgstr ""
 
-#: inc/class-timeslate-tokens.php:111
+#: assets/blocks/src/form/view.js:564
+msgid "Your details"
+msgstr ""
+
+#: inc/class-timeslate-tokens.php:116
 msgid "Your session may have expired. Please return to the email and click the cancel link again."
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:181
+#: inc/class-timeslate-settings-admin.php:180
 msgid "seats"
 msgstr ""
 
-#: inc/class-timeslate-settings-admin.php:169
+#: inc/class-timeslate-settings-admin.php:168
 msgid "to"
 msgstr ""

@@ -1,13 +1,13 @@
 <?php
 /**
  * Customer-facing cancel links — one-time-per-booking tokens stored
- * alongside the booking as `_ts_token`, with URL helpers + a
+ * alongside the booking as `_timeslate_token`, with URL helpers + a
  * template_redirect handler that renders the confirm-cancel page.
  *
  * Flow:
- *   1. Booking creation stores a random 32-char token in `_ts_token`.
+ *   1. Booking creation stores a random 32-char token in `_timeslate_token`.
  *   2. Confirmation / cancellation emails include a link of the form
- *        {home_url}/?timeslate_cancel=1&booking={id}&token={t}
+ *        {home_url}/?timeslate_cancel=1&timeslate_booking={id}&timeslate_token={t}
  *   3. When the customer clicks, this class intercepts on
  *      template_redirect, loads the booking, verifies the token, and
  *      renders a styled page inside the active theme's chrome
@@ -34,7 +34,7 @@ final class Timeslate_Tokens {
 
 	public const QUERY_FLAG  = 'timeslate_cancel';
 	public const NONCE_KEY   = 'timeslate_cancel_nonce';
-	public const NONCE_FIELD = '_ts_cancel_nonce';
+	public const NONCE_FIELD = '_timeslate_cancel_nonce';
 
 	public static function register(): void {
 		add_action( 'template_redirect', array( __CLASS__, 'maybe_handle_cancel' ) );
@@ -49,15 +49,15 @@ final class Timeslate_Tokens {
 		return add_query_arg(
 			array(
 				self::QUERY_FLAG => 1,
-				'booking'        => $post_id,
-				'token'          => rawurlencode( $token ),
+				'timeslate_booking' => $post_id,
+				'timeslate_token'   => rawurlencode( $token ),
 			),
 			home_url( '/' )
 		);
 	}
 
 	/**
-	 * Verify a token against the stored `_ts_token` meta. Uses
+	 * Verify a token against the stored `_timeslate_token` meta. Uses
 	 * `hash_equals` to sidestep timing attacks, even though the attack
 	 * surface here is narrow — the token space is 62^32 and the attacker
 	 * would need to know the booking ID to guess against.
@@ -66,7 +66,7 @@ final class Timeslate_Tokens {
 		if ( $post_id <= 0 || '' === $token ) {
 			return false;
 		}
-		$stored = (string) get_post_meta( $post_id, '_ts_token', true );
+		$stored = (string) get_post_meta( $post_id, '_timeslate_token', true );
 		if ( '' === $stored ) {
 			return false;
 		}
@@ -80,12 +80,13 @@ final class Timeslate_Tokens {
 			return;
 		}
 
-		$post_id = isset( $_GET['booking'] ) ? absint( wp_unslash( $_GET['booking'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$token   = isset( $_GET['token'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['token'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$post_id = isset( $_GET['timeslate_booking'] ) ? absint( wp_unslash( $_GET['timeslate_booking'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$token   = isset( $_GET['timeslate_token'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['timeslate_token'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		$post = $post_id > 0 ? get_post( $post_id ) : null;
 		$ok   = $post
 			&& Timeslate_CPT::POST_TYPE === $post->post_type
+			&& 'publish' === $post->post_status
 			&& self::verify( $post_id, $token );
 
 		if ( ! $ok ) {
@@ -118,14 +119,14 @@ final class Timeslate_Tokens {
 				exit;
 			}
 
-			$current = (string) get_post_meta( $post_id, '_ts_status', true ) ?: 'pending';
+			$current = (string) get_post_meta( $post_id, '_timeslate_status', true ) ?: 'pending';
 
 			if ( in_array( $current, array( 'cancelled', 'completed', 'no_show' ), true ) ) {
 				self::render_cancel_page( $post, $current, /* just_cancelled */ false );
 				exit;
 			}
 
-			update_post_meta( $post_id, '_ts_status', 'cancelled' );
+			update_post_meta( $post_id, '_timeslate_status', 'cancelled' );
 
 			if ( class_exists( 'Timeslate_Emails' ) ) {
 				Timeslate_Emails::send_on_status_change( $post_id, $current, 'cancelled' );
@@ -136,7 +137,7 @@ final class Timeslate_Tokens {
 		}
 
 		// GET — render confirmation form (or success page if already cancelled).
-		$current = (string) get_post_meta( $post_id, '_ts_status', true ) ?: 'pending';
+		$current = (string) get_post_meta( $post_id, '_timeslate_status', true ) ?: 'pending';
 		self::render_cancel_page( $post, $current, /* just_cancelled */ false );
 		exit;
 	}
@@ -162,7 +163,7 @@ final class Timeslate_Tokens {
 		$vars['status']         = $status;
 		$vars['status_label']   = Timeslate_Admin::status_label( $status );
 		$vars['just_cancelled'] = $just_cancelled;
-		$vars['action_url']     = self::cancel_url( (int) $post->ID, (string) get_post_meta( $post->ID, '_ts_token', true ) );
+		$vars['action_url']     = self::cancel_url( (int) $post->ID, (string) get_post_meta( $post->ID, '_timeslate_token', true ) );
 		$vars['nonce_field']    = wp_nonce_field( self::NONCE_KEY . '_' . $post->ID, self::NONCE_FIELD, true, false );
 
 		$title = $just_cancelled
@@ -199,11 +200,13 @@ final class Timeslate_Tokens {
 		// per-booking and have no content value.
 		status_header( 200 );
 		nocache_headers();
+		// The token sits in the query string; keep it out of referrers.
+		header( 'Referrer-Policy: no-referrer' );
 
 		add_filter(
 			'pre_get_document_title',
 			static function () use ( $title ) {
-				return $title . ' – ' . wp_specialchars_decode( (string) get_option( 'blogname' ), ENT_QUOTES );
+				return esc_html( $title . ' – ' . wp_specialchars_decode( (string) get_option( 'blogname' ), ENT_QUOTES ) );
 			}
 		);
 		add_action(
